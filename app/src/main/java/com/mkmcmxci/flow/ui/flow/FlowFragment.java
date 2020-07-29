@@ -12,7 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-import com.mkmcmxci.bottomnav.R;
+import com.mkmcmxci.flow.R;
 
 public class FlowFragment extends Fragment {
 
@@ -33,9 +33,9 @@ public class FlowFragment extends Fragment {
 
         PagerAdapter adapter = new PagerAdapter(getChildFragmentManager(),tabLayout.getTabCount());
 
-         viewPager.setAdapter(adapter);
+        viewPager.setAdapter(adapter);
 
-         viewPager.setOnTouchListener(new View.OnTouchListener() {
+        viewPager.setOnTouchListener(new View.OnTouchListener() {
              @Override
              public boolean onTouch(View v, MotionEvent event) {
                  return true;
@@ -60,8 +60,6 @@ public class FlowFragment extends Fragment {
         });
         return root;
     }
-
-
 
 
 }

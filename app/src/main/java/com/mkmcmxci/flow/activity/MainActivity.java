@@ -9,7 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.mkmcmxci.bottomnav.R;
+import com.mkmcmxci.flow.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.mkmcmxci.bottomnav.R;
+import com.mkmcmxci.flow.R;
 
 public class MyAccountFragment extends Fragment {
 

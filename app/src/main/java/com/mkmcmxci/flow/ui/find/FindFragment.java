@@ -9,7 +9,7 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.mkmcmxci.bottomnav.R;
+import com.mkmcmxci.flow.R;
 
 public class FindFragment extends Fragment {
 
