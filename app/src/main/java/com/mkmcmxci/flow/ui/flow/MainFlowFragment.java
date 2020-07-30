@@ -34,8 +34,9 @@ public class MainFlowFragment extends Fragment {
     RecyclerView recView;
     MainFlowAdapter mainFlowAdapter;
     List<Question> questionList;
-    MainFlowTask task;
+    //MainFlowTask task;
     ProgressDialog dialog;
+    Question q = new Question();
 
 
     @Nullable
@@ -54,13 +55,14 @@ public class MainFlowFragment extends Fragment {
 
         recView.setAdapter(mainFlowAdapter);
 
-        task = new MainFlowTask();
+        //task = new MainFlowTask();
 
-        task.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/getallquestions/");
+        //task.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/getallquestions/");
 
         return v;
     }
 
+    /*
     public class MainFlowTask extends AsyncTask<String, Void, String> {
 
         @Override
@@ -132,4 +134,6 @@ public class MainFlowFragment extends Fragment {
 
         }
     }
+
+    */
 }

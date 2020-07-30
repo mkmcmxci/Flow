@@ -38,8 +38,6 @@ public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFl
     public void onBindViewHolder(@NonNull MainFlowViewHolder holder, int position) {
 
         holder.title.setText(questionList.get(position).getTitle());
-        holder.username.setText(questionList.get(position).getUsername());
-        holder.questionId.setText(String.valueOf(questionList.get(position).getId()));
         holder.answer.setText(String.valueOf(questionList.get(position).getAnswerSize()));
     }
 
@@ -51,16 +49,12 @@ public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFl
     public class MainFlowViewHolder extends RecyclerView.ViewHolder{
 
         TextView title;
-        TextView username;
-        TextView questionId;
         TextView answer;
 
         public MainFlowViewHolder(@NonNull View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.fragment_entry_row_title_textview);
-            username = itemView.findViewById(R.id.fragment_entry_row_username_textview);
-            questionId =  itemView.findViewById(R.id.fragment_entry_row_entry_id_textview);
             answer = itemView.findViewById(R.id.fragment_entry_row_answer_textview);
 
         }
