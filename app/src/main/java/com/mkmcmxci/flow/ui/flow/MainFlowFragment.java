@@ -49,6 +49,8 @@ public class MainFlowFragment extends Fragment {
 
         questionList = new ArrayList<>();
 
+        Question q =  new Question();
+
         mainFlowAdapter = new MainFlowAdapter(getContext(), questionList);
 
         recView.setLayoutManager(new LinearLayoutManager(getActivity()));
