@@ -1,8 +1,6 @@
 package com.mkmcmxci.flow.entities;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
 
 public class Question {
 
@@ -63,5 +61,6 @@ public class Question {
     public void setAnswerSize(int answerSize) {
         this.answerSize = answerSize;
     }
+
 
 }

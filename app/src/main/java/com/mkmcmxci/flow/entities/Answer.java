@@ -7,11 +7,7 @@ public class Answer {
     private int id;
     private String content;
     private Date answerDate;
-
-
     private Question question;
-
-
     private User user;
 
     public Answer() {

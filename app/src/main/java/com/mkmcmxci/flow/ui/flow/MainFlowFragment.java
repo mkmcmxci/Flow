@@ -3,6 +3,7 @@ package com.mkmcmxci.flow.ui.flow;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +32,11 @@ import java.util.List;
 
 public class MainFlowFragment extends Fragment {
 
-    RecyclerView recView;
+    RecyclerView mainFlowRecView;
     MainFlowAdapter mainFlowAdapter;
-    List<Question> questionList;
-    //MainFlowTask task;
-    ProgressDialog dialog;
-    Question q = new Question();
-
+    List<Question> mainFlowQuestionList;
+    MainFlowTask mainFlowTask;
+    ProgressDialog mainFlowDialog;
 
     @Nullable
     @Override
@@ -45,36 +44,33 @@ public class MainFlowFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_main_flow, container, false);
 
-        recView = v.findViewById(R.id.fragment_main_flow_recycler_view);
+        mainFlowRecView = v.findViewById(R.id.fragment_main_flow_recycler_view);
 
-        questionList = new ArrayList<>();
+        mainFlowQuestionList = new ArrayList<>();
 
-        Question q =  new Question();
+        mainFlowAdapter = new MainFlowAdapter(getContext(), mainFlowQuestionList);
 
-        mainFlowAdapter = new MainFlowAdapter(getContext(), questionList);
+        mainFlowRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        recView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mainFlowRecView.setAdapter(mainFlowAdapter);
 
-        recView.setAdapter(mainFlowAdapter);
+        mainFlowTask = new MainFlowTask();
 
-        //task = new MainFlowTask();
-
-        //task.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/getallquestions/");
+        mainFlowTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/getallquestions");
 
         return v;
     }
 
-    /*
     public class MainFlowTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
 
-            dialog = new ProgressDialog(getContext());
-            dialog.setTitle("Please Wait");
-            dialog.setMessage("Loading..");
-            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            dialog.show();
+            mainFlowDialog = new ProgressDialog(getContext());
+            mainFlowDialog.setTitle("Please Wait");
+            mainFlowDialog.setMessage("Loading..");
+            mainFlowDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mainFlowDialog.show();
 
         }
 
@@ -97,6 +93,7 @@ public class MainFlowFragment extends Fragment {
                 while ((line = bf.readLine()) != null) {
 
                     buffer.append(line);
+
                 }
 
             } catch (MalformedURLException e) {
@@ -108,6 +105,7 @@ public class MainFlowFragment extends Fragment {
                 e.printStackTrace();
 
             }
+
             return buffer.toString();
         }
 
@@ -115,16 +113,19 @@ public class MainFlowFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             try {
-                JSONArray arr = new JSONArray(s);
+                JSONObject jObject = new JSONObject(s);
 
-                for (int i = 0; i < arr.length(); i++) {
+                JSONArray jArray = jObject.getJSONArray("Questions");
 
-                    JSONObject obj = (JSONObject) arr.get(i);
+                for (int i = 0; i < jArray.length(); i++) {
 
-                    questionList.add(new Question(Integer.parseInt(obj.getString("user_id")),
-                            obj.getString("title"), obj.getString("content"),
+                    JSONObject obj = (JSONObject) jArray.get(i);
+
+                    mainFlowQuestionList.add(new Question(obj.getInt("question_id"),
+                            obj.getString("title"),
+                            obj.getString("content"),
                             obj.getString("username"),
-                            Integer.parseInt(obj.getString("answer_size"))));
+                            obj.getInt("answer_size")));
                 }
                 mainFlowAdapter.notifyDataSetChanged();
 
@@ -132,10 +133,8 @@ public class MainFlowFragment extends Fragment {
 
                 e.printStackTrace();
             }
-            dialog.dismiss();
 
+            mainFlowDialog.dismiss();
         }
     }
-
-    */
 }

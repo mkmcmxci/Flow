@@ -9,9 +9,7 @@ public class MessageMain {
     private Date date;
     private int senderId;
     private int receiverId;
-
     private List<User> users;
-
     private List<MessageEntry> entries;
 
     public MessageMain() {
@@ -71,8 +69,6 @@ public class MessageMain {
         return receiverId;
     }
 
-    public void setReceiverId(int receiverId) {
-        this.receiverId = receiverId;
-    }
+    public void setReceiverId(int receiverId) { this.receiverId = receiverId; }
 
 }

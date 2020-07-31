@@ -4,16 +4,10 @@ import java.util.Date;
 
 public class MessageEntry {
 
-
-
     private int id;
     private String entry;
     private Date date;
-
-
     private User user;
-
-
     private MessageMain messageMain;
 
     public MessageEntry() {
@@ -52,9 +46,7 @@ public class MessageEntry {
         this.date = date;
     }
 
-    public User getUser() {
-        return user;
-    }
+    public User getUser() { return user; }
 
     public void setUser(User user) {
         this.user = user;

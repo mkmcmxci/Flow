@@ -16,36 +16,35 @@ import com.mkmcmxci.flow.R;
 
 public class FlowFragment extends Fragment {
 
-    TabLayout tabLayout;
-    TabItem tabItem1;
-    TabItem tabItem2;
-    ViewPager viewPager;
+    TabLayout flowFragmentTabLayout;
+    TabItem flowFragmentTabItemOne, flowFragmentTabItemTwo;
+    ViewPager flowFragmentViewPager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_flow, container, false);
 
-        tabLayout = root.findViewById(R.id.fragment_flow_tab);
-        tabItem1 = root.findViewById(R.id.tab_one);
-        tabItem2 = root.findViewById(R.id.tab_two);
-        viewPager = root.findViewById(R.id.viewpager);
+        flowFragmentTabLayout = root.findViewById(R.id.fragment_flow_tab_layout);
+        flowFragmentTabItemOne = root.findViewById(R.id.fragment_flow_tab_one);
+        flowFragmentTabItemTwo = root.findViewById(R.id.fragment_flow_tab_two);
+        flowFragmentViewPager = root.findViewById(R.id.fragment_flow_viewpager);
 
-        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager(),tabLayout.getTabCount());
+        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager(), flowFragmentTabLayout.getTabCount());
 
-        viewPager.setAdapter(adapter);
+        flowFragmentViewPager.setAdapter(adapter);
 
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-             @Override
-             public boolean onTouch(View v, MotionEvent event) {
-                 return true;
-             }
-         });
+        flowFragmentViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        flowFragmentTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                flowFragmentViewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override

@@ -2,7 +2,6 @@ package com.mkmcmxci.flow.ui.flow;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -17,19 +16,19 @@ import java.util.List;
 
 public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFlowViewHolder> {
 
-    Context context;
-    List<Question> questionList;
+    Context mainFlowContext;
+    List<Question> mainFlowQuestionList;
 
-    public MainFlowAdapter(Context context, List<Question> questionList) {
-        this.context = context;
-        this.questionList = questionList;
+    public MainFlowAdapter(Context mainFlowContext, List<Question> mainFlowQuestionList) {
+        this.mainFlowContext = mainFlowContext;
+        this.mainFlowQuestionList = mainFlowQuestionList;
     }
 
     @NonNull
     @Override
     public MainFlowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_entry_row, parent, false);
+        View view = LayoutInflater.from(mainFlowContext).inflate(R.layout.fragment_entry_row, parent, false);
 
         return new MainFlowViewHolder(view);
     }
@@ -37,25 +36,35 @@ public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFl
     @Override
     public void onBindViewHolder(@NonNull MainFlowViewHolder holder, int position) {
 
-        holder.title.setText(questionList.get(position).getTitle());
-        holder.answer.setText(String.valueOf(questionList.get(position).getAnswerSize()));
+        holder.questionTitle.setText(mainFlowQuestionList.get(position).getTitle());
+
+        if (mainFlowQuestionList.get(position).getAnswerSize() == 0) {
+
+            holder.answerCount.setText("");
+
+        } else {
+
+            holder.answerCount.setText(String.valueOf(mainFlowQuestionList.get(position).getAnswerSize()));
+
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return questionList.size();
+        return mainFlowQuestionList.size();
     }
 
-    public class MainFlowViewHolder extends RecyclerView.ViewHolder{
+    public class MainFlowViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title;
-        TextView answer;
+        TextView questionTitle;
+        TextView answerCount;
 
         public MainFlowViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.fragment_entry_row_title_textview);
-            answer = itemView.findViewById(R.id.fragment_entry_row_answer_textview);
+            questionTitle = itemView.findViewById(R.id.fragment_entry_row_title_textview);
+            answerCount = itemView.findViewById(R.id.fragment_entry_row_answer_textview);
 
         }
     }

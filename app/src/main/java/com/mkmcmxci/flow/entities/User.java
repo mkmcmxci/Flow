@@ -5,20 +5,14 @@ import java.util.List;
 
 public class User {
 
-
-
     private int id;
     private String name;
     private String mail;
     private String password;
     private Date joinDate;
-
     private List<Question> questions;
-
     private List<Answer> answers;
-
     private List<MessageMain> messageMains;
-
     private List<MessageEntry> messageEntries;
 
     public User() {
