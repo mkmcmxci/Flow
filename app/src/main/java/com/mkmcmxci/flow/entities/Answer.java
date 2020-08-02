@@ -4,30 +4,30 @@ import java.util.Date;
 
 public class Answer {
 
-    private int id;
+    private String username;
     private String content;
-    private Date answerDate;
-    private Question question;
-    private User user;
+    private String title;
+    private int answerCount;
+    private boolean isHead;
 
     public Answer() {
         super();
     }
 
-    public Answer(String content, Date answerDate, Question question, User user) {
-        super();
+    public Answer(String username, String content, String title, int answerCount, boolean isHead) {
+        this.username = username;
         this.content = content;
-        this.answerDate = answerDate;
-        this.question = question;
-        this.user = user;
+        this.title = title;
+        this.answerCount = answerCount;
+        this.isHead = isHead;
     }
 
-    public int getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getContent() {
@@ -38,28 +38,27 @@ public class Answer {
         this.content = content;
     }
 
-    public Date getAnswerDate() {
-        return answerDate;
+    public String getTitle() {
+        return title;
     }
 
-    public void setAnswerDate(Date answerDate) {
-        this.answerDate = answerDate;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Question getQuestion() {
-        return question;
+    public int getAnswerCount() {
+        return answerCount;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public void setAnswerCount(int answerCount) {
+        this.answerCount = answerCount;
     }
 
-    public User getUser() {
-        return user;
+    public boolean isHead() {
+        return isHead;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setHead(boolean head) {
+        isHead = head;
     }
-
 }
