@@ -50,6 +50,8 @@ public class MainFlowFragment extends Fragment {
 
         mainFlowAdapter = new MainFlowAdapter(getContext(), mainFlowQuestionList);
 
+        Log.e("mainFlowQuestionList",mainFlowQuestionList.toString());
+
         mainFlowRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mainFlowRecView.setAdapter(mainFlowAdapter);

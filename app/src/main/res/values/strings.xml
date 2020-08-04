@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Flow</string>
+    <string name="title_flow">Flow</string>
+    <string name="title_find">Find</string>
+    <string name="title_message">Messages</string>
+    <string name="title_answers">Answers</string>
+    <string name="title_my_account">Me</string>
+</resources>

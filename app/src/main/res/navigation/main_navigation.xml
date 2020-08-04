@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@+id/navigation_flow">
+
+    <fragment
+        android:id="@+id/navigation_flow"
+        android:name="com.mkmcmxci.flow.ui.flow.FlowFragment"
+        android:label="@string/title_flow"
+        tools:layout="@layout/fragment_flow" >
+        <action
+            android:id="@+id/action_navigation_flow_to_navigation_answer"
+            app:destination="@id/navigation_answer" />
+        <action
+            android:id="@+id/action_navigation_flow_to_navigation_answer2"
+            app:destination="@id/navigation_answer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_find"
+        android:name="com.mkmcmxci.flow.ui.find.FindFragment"
+        android:label="@string/title_find"
+        tools:layout="@layout/fragment_find" >
+        <action
+            android:id="@+id/action_navigation_find_to_navigation_find_category_row"
+            app:destination="@id/navigation_find_category_row" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_find_category_row"
+        android:name="com.mkmcmxci.flow.ui.find.CategoryDetailsFragment"
+        android:label="@string/title_find"
+        tools:layout="@layout/fragment_category_details" >
+        <action
+            android:id="@+id/action_navigation_find_category_row_to_navigation_answer"
+            app:destination="@id/navigation_answer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_answer"
+        android:name="com.mkmcmxci.flow.ui.flow.AnswerFragment"
+        android:label="@string/title_answers"
+        tools:layout="@layout/fragment_answer" >
+        <action
+            android:id="@+id/action_navigation_answer_self"
+            app:destination="@id/navigation_answer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_message"
+        android:name="com.mkmcmxci.flow.ui.message.MessageFragment"
+        android:label="@string/title_message"
+        tools:layout="@layout/fragment_message" />
+
+    <fragment
+        android:id="@+id/navigation_my_account"
+        android:name="com.mkmcmxci.flow.ui.my_account.MyAccountFragment"
+        android:label="@string/title_my_account"
+        tools:layout="@layout/fragment_my_account" />
+</navigation>

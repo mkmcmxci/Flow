@@ -49,6 +49,8 @@ public class CategoryDetailsFragment extends Fragment {
 
         categoryDetailsQuestionList = new ArrayList<>();
 
+
+
         categoryDetailsAdapter = new CategoryDetailsAdapter(getContext(),categoryDetailsQuestionList);
 
         categoryDetailsRecView.setLayoutManager(new LinearLayoutManager(getActivity()));

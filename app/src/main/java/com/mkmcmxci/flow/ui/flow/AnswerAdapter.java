@@ -1,6 +1,7 @@
 package com.mkmcmxci.flow.ui.flow;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +21,13 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int TYPE_ITEM = 1;
 
 
-    List<Answer> answerAdapterList;
+    List<Answer> answerItemList;
     Context answerContext;
 
 
-    public AnswerAdapter(Context answerContext, List<Answer> answerAdapterList) {
-        this.answerAdapterList = answerAdapterList;
+    public AnswerAdapter(Context answerContext, List<Answer> answerItemList) {
         this.answerContext = answerContext;
+        this.answerItemList = answerItemList;
 
     }
 
@@ -34,7 +35,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        if(viewType == TYPE_HEADER){
+       if(viewType == TYPE_HEADER){
 
             View headerView = LayoutInflater.from(answerContext).inflate(R.layout.fragment_answer_header_row, parent, false);
 
@@ -48,31 +49,33 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             return new AnswerItemViewHolder(rowView);
 
 
-        }
-        else{
+       }
+       else{
 
-            return null;
+           return null;
         }
             }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        if (holder instanceof AnswerHeaderViewHolder){
+       if (holder instanceof AnswerHeaderViewHolder){
             AnswerHeaderViewHolder headerViewHolder = (AnswerHeaderViewHolder) holder;
 
-            headerViewHolder.questionAnswerCount.setText(String.valueOf(answerAdapterList.get(position).getAnswerCount()));
-            headerViewHolder.questionTitle.setText(answerAdapterList.get(position).getTitle());
-            headerViewHolder.questionUsername.setText(answerAdapterList.get(position).getUsername());
-            headerViewHolder.questionContent.setText(answerAdapterList.get(position).getContent());
+            headerViewHolder.questionAnswerCount.setText(String.valueOf(answerItemList.get(position).getAnswerCount()));
+            headerViewHolder.questionTitle.setText(answerItemList.get(position).getTitle());
+            headerViewHolder.questionUsername.setText(answerItemList.get(position).getUsername());
+            headerViewHolder.questionContent.setText(answerItemList.get(position).getContent());
 
         }
         else if (holder instanceof AnswerItemViewHolder){
 
             AnswerItemViewHolder itemViewHolder = (AnswerItemViewHolder) holder;
 
-            itemViewHolder.answerContent.setText(answerAdapterList.get(position-1).getContent());
-            itemViewHolder.answerUsername.setText(answerAdapterList.get(position-1).getUsername());
+            itemViewHolder.answerContent.setText(answerItemList.get(position).getContent());
+
+            itemViewHolder.answerUsername.setText(answerItemList.get(position).getUsername());
+
 
         }
     }
@@ -90,7 +93,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return answerAdapterList.size() + 1;
+        return answerItemList.size();
     }
 
 

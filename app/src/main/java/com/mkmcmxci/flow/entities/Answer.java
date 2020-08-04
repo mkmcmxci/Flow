@@ -8,18 +8,16 @@ public class Answer {
     private String content;
     private String title;
     private int answerCount;
-    private boolean isHead;
 
     public Answer() {
         super();
     }
 
-    public Answer(String username, String content, String title, int answerCount, boolean isHead) {
+    public Answer(String username, String content, String title, int answerCount) {
         this.username = username;
         this.content = content;
         this.title = title;
         this.answerCount = answerCount;
-        this.isHead = isHead;
     }
 
     public String getUsername() {
@@ -54,11 +52,13 @@ public class Answer {
         this.answerCount = answerCount;
     }
 
-    public boolean isHead() {
-        return isHead;
-    }
-
-    public void setHead(boolean head) {
-        isHead = head;
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "username='" + username + '\'' +
+                ", content='" + content + '\'' +
+                ", title='" + title + '\'' +
+                ", answerCount=" + answerCount +
+                '}';
     }
 }

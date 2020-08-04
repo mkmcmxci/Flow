@@ -2,6 +2,7 @@ package com.mkmcmxci.flow.ui.flow;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFl
     public MainFlowAdapter(Context mainFlowContext, List<Question> mainFlowQuestionList) {
         this.mainFlowContext = mainFlowContext;
         this.mainFlowQuestionList = mainFlowQuestionList;
+
     }
 
     @NonNull
