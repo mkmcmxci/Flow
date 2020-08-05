@@ -20,10 +20,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
 
-
     List<Answer> answerItemList;
     Context answerContext;
-
 
     public AnswerAdapter(Context answerContext, List<Answer> answerItemList) {
         this.answerContext = answerContext;
@@ -35,31 +33,28 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-       if(viewType == TYPE_HEADER){
+        if (viewType == TYPE_HEADER) {
 
             View headerView = LayoutInflater.from(answerContext).inflate(R.layout.fragment_answer_header_row, parent, false);
 
             return new AnswerHeaderViewHolder(headerView);
 
-        }
-        else if(viewType == TYPE_ITEM){
+        } else if (viewType == TYPE_ITEM) {
 
             View rowView = LayoutInflater.from(answerContext).inflate(R.layout.fragment_answer_row, parent, false);
 
             return new AnswerItemViewHolder(rowView);
 
+        } else {
 
-       }
-       else{
-
-           return null;
+            return null;
         }
-            }
+    }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-       if (holder instanceof AnswerHeaderViewHolder){
+        if (holder instanceof AnswerHeaderViewHolder) {
             AnswerHeaderViewHolder headerViewHolder = (AnswerHeaderViewHolder) holder;
 
             headerViewHolder.questionAnswerCount.setText(String.valueOf(answerItemList.get(position).getAnswerCount()));
@@ -67,15 +62,13 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             headerViewHolder.questionUsername.setText(answerItemList.get(position).getUsername());
             headerViewHolder.questionContent.setText(answerItemList.get(position).getContent());
 
-        }
-        else if (holder instanceof AnswerItemViewHolder){
+        } else if (holder instanceof AnswerItemViewHolder) {
 
             AnswerItemViewHolder itemViewHolder = (AnswerItemViewHolder) holder;
 
             itemViewHolder.answerContent.setText(answerItemList.get(position).getContent());
 
             itemViewHolder.answerUsername.setText(answerItemList.get(position).getUsername());
-
 
         }
     }
@@ -86,9 +79,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             return TYPE_HEADER;
         }
-        return TYPE_ITEM;    }
-
-
+        return TYPE_ITEM;
+    }
 
 
     @Override
@@ -97,11 +89,9 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
+    public class AnswerHeaderViewHolder extends RecyclerView.ViewHolder {
 
-
-    public class AnswerHeaderViewHolder extends RecyclerView.ViewHolder{
-
-            TextView questionTitle, questionContent, questionUsername, questionAnswerCount;
+        TextView questionTitle, questionContent, questionUsername, questionAnswerCount;
 
         public AnswerHeaderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -113,10 +103,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-
-
-
-    public class AnswerItemViewHolder extends RecyclerView.ViewHolder{
+    public class AnswerItemViewHolder extends RecyclerView.ViewHolder {
 
         TextView answerContent, answerUsername;
 
@@ -125,7 +112,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             answerContent = itemView.findViewById(R.id.fragment_answer_row_answer_textview);
             answerUsername = itemView.findViewById(R.id.fragment_answer_row_username_textview);
-
 
         }
     }

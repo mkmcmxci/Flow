@@ -1,6 +1,7 @@
 package com.mkmcmxci.flow.ui.flow;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mkmcmxci.flow.R;
+import com.mkmcmxci.flow.activity.PostQuestionActivity;
 import com.mkmcmxci.flow.entities.Question;
 
 import org.json.JSONArray;
@@ -37,6 +40,7 @@ public class MainFlowFragment extends Fragment {
     List<Question> mainFlowQuestionList;
     MainFlowTask mainFlowTask;
     ProgressDialog mainFlowDialog;
+    FloatingActionButton mainFlowFloatingActionButton;
 
     @Nullable
     @Override
@@ -46,11 +50,11 @@ public class MainFlowFragment extends Fragment {
 
         mainFlowRecView = v.findViewById(R.id.fragment_main_flow_recycler_view);
 
+        mainFlowFloatingActionButton = v.findViewById(R.id.fragment_main_flow_floating_button);
+
         mainFlowQuestionList = new ArrayList<>();
 
         mainFlowAdapter = new MainFlowAdapter(getContext(), mainFlowQuestionList);
-
-        Log.e("mainFlowQuestionList",mainFlowQuestionList.toString());
 
         mainFlowRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -59,6 +63,16 @@ public class MainFlowFragment extends Fragment {
         mainFlowTask = new MainFlowTask();
 
         mainFlowTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/getallquestions");
+
+        mainFlowFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(getActivity(), PostQuestionActivity.class);
+                startActivity(i);
+
+            }
+        });
 
         return v;
     }

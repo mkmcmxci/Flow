@@ -72,7 +72,6 @@ public class FindAdapter extends RecyclerView.Adapter<FindAdapter.FindViewHolder
 
             categoryName = itemView.findViewById(R.id.fragment_category_row_category_textview);
 
-
         }
     }
 }

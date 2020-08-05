@@ -1,7 +1,6 @@
 package com.mkmcmxci.flow.entities;
 
 
-
 public class Question {
 
     private int id;

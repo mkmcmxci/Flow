@@ -1,6 +1,7 @@
 package com.mkmcmxci.flow.ui.flow;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mkmcmxci.flow.R;
+import com.mkmcmxci.flow.activity.PostQuestionActivity;
 import com.mkmcmxci.flow.entities.Question;
 
 import org.json.JSONArray;
@@ -36,6 +39,7 @@ public class LastAnsweredFragment extends Fragment {
     List<Question> lastAnsweredQuestionList;
     LastAnsweredTask lastAnsweredTask;
     ProgressDialog lastAnsweredDialog;
+    FloatingActionButton lastAnsweredFloatingActionButton;
 
     @Nullable
     @Override
@@ -44,6 +48,8 @@ public class LastAnsweredFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_last_answered, container, false);
 
         lastAnsweredRecView = v.findViewById(R.id.fragment_last_answered_recycler_view);
+
+        lastAnsweredFloatingActionButton = v.findViewById(R.id.fragment_last_answered_floating_button);
 
         lastAnsweredQuestionList = new ArrayList<>();
 
@@ -56,6 +62,14 @@ public class LastAnsweredFragment extends Fragment {
         lastAnsweredTask = new LastAnsweredTask();
 
         lastAnsweredTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/getquestionsbyanswer/");
+
+        lastAnsweredFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), PostQuestionActivity.class);
+                startActivity(i);
+            }
+        });
 
 
         return v;
@@ -104,7 +118,6 @@ public class LastAnsweredFragment extends Fragment {
                 e.printStackTrace();
 
             }
-
 
             return buffer.toString();
         }

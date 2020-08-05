@@ -69,6 +69,8 @@ public class MessageMain {
         return receiverId;
     }
 
-    public void setReceiverId(int receiverId) { this.receiverId = receiverId; }
+    public void setReceiverId(int receiverId) {
+        this.receiverId = receiverId;
+    }
 
 }

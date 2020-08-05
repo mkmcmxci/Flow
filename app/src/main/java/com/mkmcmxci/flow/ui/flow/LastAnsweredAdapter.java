@@ -59,7 +59,6 @@ public class LastAnsweredAdapter extends RecyclerView.Adapter<LastAnsweredAdapte
                 bundle.putString("questionUsername", lastAnsweredQuestionList.get(position).getUsername());
                 bundle.putString("questionAnswerSize", String.valueOf(lastAnsweredQuestionList.get(position).getAnswerSize()));
 
-
                 Navigation.findNavController(v).navigate(R.id.action_navigation_flow_to_navigation_answer2, bundle);
             }
         });

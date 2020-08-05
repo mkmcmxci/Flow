@@ -1,10 +1,11 @@
 package com.mkmcmxci.flow.ui.find;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -14,7 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mkmcmxci.flow.R;
+import com.mkmcmxci.flow.activity.PostQuestionActivity;
 import com.mkmcmxci.flow.entities.Question;
 
 import org.json.JSONArray;
@@ -38,6 +41,8 @@ public class CategoryDetailsFragment extends Fragment {
     CategoryDetailsTask categoryDetailsTask;
     ProgressDialog categoryDetailsDialog;
     String catID, catName;
+    FloatingActionButton categoryDetailsFloatingActionButton;
+
 
     @Nullable
     @Override
@@ -47,11 +52,12 @@ public class CategoryDetailsFragment extends Fragment {
 
         categoryDetailsRecView = v.findViewById(R.id.fragment_category_details_recycler_view);
 
+        categoryDetailsFloatingActionButton = v.findViewById(R.id.fragment_category_details_floating_button);
+
         categoryDetailsQuestionList = new ArrayList<>();
 
 
-
-        categoryDetailsAdapter = new CategoryDetailsAdapter(getContext(),categoryDetailsQuestionList);
+        categoryDetailsAdapter = new CategoryDetailsAdapter(getContext(), categoryDetailsQuestionList);
 
         categoryDetailsRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -64,8 +70,26 @@ public class CategoryDetailsFragment extends Fragment {
 
         categoryDetailsTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/questionsbycategory/" + catID);
 
+        categoryDetailsFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), PostQuestionActivity.class);
+                startActivity(i);
+            }
+        });
+
+        setHasOptionsMenu(true);
+
         return v;
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        getActivity().onBackPressed();
+
+        return super.onOptionsItemSelected(item);
     }
 
     public class CategoryDetailsTask extends AsyncTask<String, Void, String> {

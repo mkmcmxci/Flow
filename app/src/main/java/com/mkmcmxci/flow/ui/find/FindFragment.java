@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.entities.Category;
 
@@ -43,7 +44,7 @@ public class FindFragment extends Fragment {
 
         findFragmentRecView = v.findViewById(R.id.fragment_find_recycler_view);
 
-        findFragmentCategory =  new Category();
+        findFragmentCategory = new Category();
 
         findFragmentCategoryList = findFragmentCategory.getCategoryList();
 
@@ -52,7 +53,6 @@ public class FindFragment extends Fragment {
         findFragmentRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         findFragmentRecView.setAdapter(findFragmentFindAdapter);
-
 
         return v;
     }

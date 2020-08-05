@@ -18,7 +18,7 @@ import com.mkmcmxci.flow.ui.flow.MainFlowAdapter;
 
 import java.util.List;
 
-public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetailsAdapter.CategoryDetailsViewHolder>{
+public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetailsAdapter.CategoryDetailsViewHolder> {
 
     Context CategoryDetailsContext;
     List<Question> CategoryDetailsQuestionList;
@@ -34,7 +34,8 @@ public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetails
     public CategoryDetailsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(CategoryDetailsContext).inflate(R.layout.fragment_entry_row, parent, false);
 
-        return new CategoryDetailsAdapter.CategoryDetailsViewHolder(view);    }
+        return new CategoryDetailsAdapter.CategoryDetailsViewHolder(view);
+    }
 
     @Override
     public void onBindViewHolder(@NonNull CategoryDetailsViewHolder holder, final int position) {

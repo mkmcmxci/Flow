@@ -16,8 +16,7 @@ public class SignUpFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_sign_up,container,false);
-
+        View v = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
         return v;
     }

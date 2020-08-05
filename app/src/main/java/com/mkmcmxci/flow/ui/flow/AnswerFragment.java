@@ -15,10 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,7 +55,6 @@ public class AnswerFragment extends Fragment {
     String questionID, questionTitle, questionContent, questionUsername, questionAnswerSize;
     EditText answeredEditText;
     TextView answeredTexViewCancel, answeredTexViewSend;
-    static View v;
 
     @Nullable
     @Override
@@ -69,7 +70,6 @@ public class AnswerFragment extends Fragment {
 
         answeredTexViewSend = v.findViewById(R.id.fragment_answer_send_text_view);
 
-
         View bottomSheet = v.findViewById(R.id.fragment_answer_bottom_sheet);
 
         answeredBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -84,7 +84,7 @@ public class AnswerFragment extends Fragment {
 
         answeredItemList = new ArrayList<>();
 
-        answeredItemList.add(new Answer(questionUsername,questionContent,questionTitle,Integer.parseInt(questionAnswerSize)));
+        answeredItemList.add(new Answer(questionUsername, questionContent, questionTitle, Integer.parseInt(questionAnswerSize)));
 
         answeredAdapter = new AnswerAdapter(getContext(), answeredItemList);
 
@@ -114,8 +114,16 @@ public class AnswerFragment extends Fragment {
 
                 AnsweredSendTask answeredSendTask = new AnsweredSendTask();
 
-                answeredSendTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/answerwebservices/addanswer/" + answeredEditText.getText().toString() + "/" + questionID +  "/1");
+                answeredSendTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/answerwebservices/addanswer/" + answeredEditText.getText().toString() + "/" + questionID + "/1");
 
+                Bundle bundle = new Bundle();
+                bundle.putString("questionID", questionID);
+                bundle.putString("questionTitle", questionTitle);
+                bundle.putString("questionContent", questionContent);
+                bundle.putString("questionUsername", questionUsername);
+                bundle.putString("questionAnswerSize", questionAnswerSize);
+
+                Navigation.findNavController(v).navigate(R.id.action_navigation_answer_self, bundle);
 
             }
         });
@@ -128,13 +136,15 @@ public class AnswerFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-            inflater.inflate(R.menu.answer_add_menu,menu);
+        inflater.inflate(R.menu.answer_add_menu, menu);
+
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+
+        switch (item.getItemId()) {
             case R.id.answer_add_menu_item:
                 answeredBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             default:
@@ -187,7 +197,6 @@ public class AnswerFragment extends Fragment {
 
             }
 
-
             return buffer.toString();
         }
 
@@ -216,11 +225,9 @@ public class AnswerFragment extends Fragment {
                 e.printStackTrace();
             }
 
-
             answeredDialog.dismiss();
         }
+
     }
-
-
 
 }
