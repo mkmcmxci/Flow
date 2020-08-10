@@ -31,6 +31,9 @@ public class FindAdapter extends RecyclerView.Adapter<FindAdapter.FindViewHolder
         this.findFragmentCategoryList = findFragmentCategoryList;
     }
 
+
+
+
     @NonNull
     @Override
     public FindViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

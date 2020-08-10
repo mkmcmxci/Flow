@@ -34,7 +34,10 @@ public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFl
 
         View view = LayoutInflater.from(mainFlowContext).inflate(R.layout.fragment_entry_row, parent, false);
 
+
         return new MainFlowViewHolder(view);
+
+
     }
 
     @Override
@@ -63,6 +66,8 @@ public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFl
                 bundle.putString("questionAnswerSize", String.valueOf(mainFlowQuestionList.get(position).getAnswerSize()));
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_flow_to_navigation_answer2, bundle);
+
+
             }
         });
 

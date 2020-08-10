@@ -1,5 +1,6 @@
 package com.mkmcmxci.flow.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -91,6 +92,13 @@ public class PostQuestionActivity extends AppCompatActivity {
                         postQuestionContentText.getText().toString() + "/" +
                         String.valueOf(spinInt) +
                         "/1");
+
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+
+                startActivity(i);
+
+            case android.R.id.home:
+                finish();
 
             default:
                 return super.onOptionsItemSelected(item);

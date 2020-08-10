@@ -15,6 +15,16 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name=".activity.PostQuestionActivity"
+            android:label="@string/title_text_question">
+        </activity>
+
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="@string/title_login">
 
             <intent-filter>
 
@@ -22,12 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
 
             </intent-filter>
-
-        </activity>
-
-        <activity
-            android:name=".activity.PostQuestionActivity"
-            android:label="Text Question">
 
         </activity>
 

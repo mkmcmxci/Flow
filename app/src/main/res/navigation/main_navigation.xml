@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_navigation_find_to_navigation_find_category_row"
             app:destination="@id/navigation_find_category_row" />
+        <action
+            android:id="@+id/action_navigation_find_to_navigation_answer"
+            app:destination="@id/navigation_answer" />
     </fragment>
 
     <fragment
@@ -36,6 +39,9 @@
         <action
             android:id="@+id/action_navigation_find_category_row_to_navigation_answer"
             app:destination="@id/navigation_answer" />
+        <action
+            android:id="@+id/action_navigation_find_category_row_to_navigation_find"
+            app:destination="@id/navigation_find" />
     </fragment>
 
     <fragment
@@ -43,6 +49,12 @@
         android:name="com.mkmcmxci.flow.ui.flow.AnswerFragment"
         android:label="@string/title_answers"
         tools:layout="@layout/fragment_answer" >
+        <action
+            android:id="@+id/action_navigation_answer_to_navigation_flow"
+            app:destination="@id/navigation_flow" />
+        <action
+            android:id="@+id/action_navigation_answer_to_navigation_find_category_row"
+            app:destination="@id/navigation_find_category_row" />
         <action
             android:id="@+id/action_navigation_answer_self"
             app:destination="@id/navigation_answer" />
@@ -59,4 +71,6 @@
         android:name="com.mkmcmxci.flow.ui.my_account.MyAccountFragment"
         android:label="@string/title_my_account"
         tools:layout="@layout/fragment_my_account" />
+
+
 </navigation>

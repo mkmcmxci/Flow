@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.activity.PostQuestionActivity;
 import com.mkmcmxci.flow.entities.Question;
+import com.mkmcmxci.flow.tasks.LastAnsweredTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +39,6 @@ public class LastAnsweredFragment extends Fragment {
     LastAnsweredAdapter lastAnsweredAdapter;
     List<Question> lastAnsweredQuestionList;
     LastAnsweredTask lastAnsweredTask;
-    ProgressDialog lastAnsweredDialog;
     FloatingActionButton lastAnsweredFloatingActionButton;
 
     @Nullable
@@ -59,7 +59,7 @@ public class LastAnsweredFragment extends Fragment {
 
         lastAnsweredRecView.setAdapter(lastAnsweredAdapter);
 
-        lastAnsweredTask = new LastAnsweredTask();
+        lastAnsweredTask = new LastAnsweredTask(lastAnsweredAdapter, lastAnsweredQuestionList);
 
         lastAnsweredTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/getquestionsbyanswer/");
 
@@ -71,83 +71,7 @@ public class LastAnsweredFragment extends Fragment {
             }
         });
 
-
         return v;
     }
 
-    public class LastAnsweredTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-
-            lastAnsweredDialog = new ProgressDialog(getContext());
-            lastAnsweredDialog.setTitle("Please Wait");
-            lastAnsweredDialog.setMessage("Loading..");
-            lastAnsweredDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            lastAnsweredDialog.show();
-
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            String urlString = strings[0];
-
-            StringBuilder buffer = new StringBuilder();
-
-            try {
-                URL url = new URL(urlString);
-
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                BufferedReader bf = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                String line = "";
-
-                while ((line = bf.readLine()) != null) {
-
-                    buffer.append(line);
-                }
-
-            } catch (MalformedURLException e) {
-
-                e.printStackTrace();
-
-            } catch (IOException e) {
-
-                e.printStackTrace();
-
-            }
-
-            return buffer.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-            try {
-                JSONObject jObject = new JSONObject(s);
-
-                JSONArray jArray = jObject.getJSONArray("Questions");
-
-                for (int i = 0; i < jArray.length(); i++) {
-
-                    JSONObject obj = (JSONObject) jArray.get(i);
-
-                    lastAnsweredQuestionList.add(new Question(obj.getInt("question_id"),
-                            obj.getString("title"),
-                            obj.getString("content"),
-                            obj.getString("username"),
-                            obj.getInt("answer_size")));
-                }
-                lastAnsweredAdapter.notifyDataSetChanged();
-
-            } catch (JSONException e) {
-
-                e.printStackTrace();
-            }
-
-            lastAnsweredDialog.dismiss();
-        }
-    }
 }

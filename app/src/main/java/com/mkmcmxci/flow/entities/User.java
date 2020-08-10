@@ -9,26 +9,18 @@ public class User {
     private String name;
     private String mail;
     private String password;
-    private Date joinDate;
-    private List<Question> questions;
-    private List<Answer> answers;
-    private List<MessageMain> messageMains;
-    private List<MessageEntry> messageEntries;
+
 
     public User() {
         super();
     }
 
-    public User(String name, String mail, String password, Date joinDate, List<Question> questions,
-                List<Answer> answers, List<MessageMain> messageMains, List<MessageEntry> messageEntries) {
-        super();
+
+    public User(int id, String name, String mail, String password) {
+        this.id = id;
         this.name = name;
         this.mail = mail;
         this.password = password;
-        this.joinDate = joinDate;
-        this.questions = questions;
-        this.answers = answers;
-        this.messageMains = messageMains;
     }
 
     public int getId() {
@@ -63,44 +55,13 @@ public class User {
         this.password = password;
     }
 
-    public Date getJoinDate() {
-        return joinDate;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", mail='" + mail + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
-
-    public void setJoinDate(Date joinDate) {
-        this.joinDate = joinDate;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
-    }
-
-    public List<MessageMain> getMessageMains() {
-        return messageMains;
-    }
-
-    public void setMessageMains(List<MessageMain> messageMains) {
-        this.messageMains = messageMains;
-    }
-
-    public List<MessageEntry> getMessageEntries() {
-        return messageEntries;
-    }
-
-    public void setMessageEntries(List<MessageEntry> messageEntries) {
-        this.messageEntries = messageEntries;
-    }
-
 }

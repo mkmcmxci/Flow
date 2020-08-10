@@ -29,6 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.entities.Answer;
 import com.mkmcmxci.flow.tasks.AnsweredSendTask;
+import com.mkmcmxci.flow.tasks.AnsweredTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,17 +51,16 @@ public class AnswerFragment extends Fragment {
     BottomSheetBehavior answeredBottomSheetBehavior;
     AnswerAdapter answeredAdapter;
     List<Answer> answeredItemList;
-    AnsweredTask answeredTask;
-    ProgressDialog answeredDialog;
     String questionID, questionTitle, questionContent, questionUsername, questionAnswerSize;
     EditText answeredEditText;
     TextView answeredTexViewCancel, answeredTexViewSend;
+    View v;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_answer, container, false);
+        v = inflater.inflate(R.layout.fragment_answer, container, false);
 
         answeredRecView = v.findViewById(R.id.fragment_answer_recycler_view);
 
@@ -92,7 +92,9 @@ public class AnswerFragment extends Fragment {
 
         answeredRecView.setAdapter(answeredAdapter);
 
-        answeredTask = new AnsweredTask();
+        AnsweredTask answeredTask;
+
+        answeredTask = new AnsweredTask(answeredAdapter, answeredItemList);
 
         answeredTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/answerwebservices/answerbyquestion/" + questionID);
 
@@ -103,7 +105,6 @@ public class AnswerFragment extends Fragment {
             public void onClick(View v) {
 
                 answeredBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-
 
             }
         });
@@ -143,90 +144,13 @@ public class AnswerFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        if (item.getItemId() == R.id.answer_add_menu_item) {
 
-        switch (item.getItemId()) {
-            case R.id.answer_add_menu_item:
-                answeredBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
-
-    public class AnsweredTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-
-            answeredDialog = new ProgressDialog(getContext());
-            answeredDialog.setTitle("Please Wait");
-            answeredDialog.setMessage("Loading..");
-            answeredDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            answeredDialog.show();
+            answeredBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
         }
 
-        @Override
-        protected String doInBackground(String... strings) {
-
-            String urlString = strings[0];
-
-            StringBuilder buffer = new StringBuilder();
-
-            try {
-                URL url = new URL(urlString);
-
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                BufferedReader bf = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                String line = "";
-
-                while ((line = bf.readLine()) != null) {
-
-                    buffer.append(line);
-                }
-
-            } catch (MalformedURLException e) {
-
-                e.printStackTrace();
-
-            } catch (IOException e) {
-
-                e.printStackTrace();
-
-            }
-
-            return buffer.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-            try {
-                JSONObject jObject = new JSONObject(s);
-
-                JSONArray jArray = jObject.getJSONArray("Answers");
-
-                for (int i = 0; i < jArray.length(); i++) {
-
-                    JSONObject obj = (JSONObject) jArray.get(i);
-
-                    answeredItemList.add(new Answer(obj.getString("answer_username"),
-                            obj.getString("answer_content"),
-                            obj.getString("question_title"),
-                            obj.getInt("answer_size")));
-
-                }
-                answeredAdapter.notifyDataSetChanged();
-
-            } catch (JSONException e) {
-
-                e.printStackTrace();
-            }
-
-            answeredDialog.dismiss();
-        }
+        return super.onOptionsItemSelected(item);
 
     }
 

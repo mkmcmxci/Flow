@@ -2,36 +2,31 @@ package com.mkmcmxci.flow.ui.find;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.mkmcmxci.flow.R;
-import com.mkmcmxci.flow.entities.Category;
-
-
-import java.util.List;
 
 public class FindFragment extends Fragment {
 
     SearchView findFragmentSearchView;
-    RecyclerView findFragmentRecView;
-    FindAdapter findFragmentFindAdapter;
-    List<Category> findFragmentCategoryList;
-    Category findFragmentCategory;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    FindResultAdapter searchAdapter;
 
-        View v = inflater.inflate(R.layout.fragment_find, container, false);
+
+    View v;
+
+
+    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+
+        v = inflater.inflate(R.layout.fragment_find, container, false);
+
+
 
         findFragmentSearchView = v.findViewById(R.id.fragment_find_search_view);
 
@@ -39,20 +34,49 @@ public class FindFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 findFragmentSearchView.setIconified(false);
+
             }
         });
 
-        findFragmentRecView = v.findViewById(R.id.fragment_find_recycler_view);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_find_frame_view, new CategoryFragment()).commit();
 
-        findFragmentCategory = new Category();
 
-        findFragmentCategoryList = findFragmentCategory.getCategoryList();
 
-        findFragmentFindAdapter = new FindAdapter(getContext(), findFragmentCategoryList);
 
-        findFragmentRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        findFragmentRecView.setAdapter(findFragmentFindAdapter);
+
+        findFragmentSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                if(newText.equals("")){
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_find_frame_view, new CategoryFragment()).commit();
+
+
+
+
+                }
+                else{
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_find_frame_view, new FindResultFragment(searchAdapter, newText)).commit();
+
+
+
+
+                }
+
+
+
+
+
+                return false;
+            }
+        });
+
 
         return v;
     }

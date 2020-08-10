@@ -12,6 +12,9 @@
         android:label="BulletinBoard"
         tools:layout="@layout/fragment_forgot_password">
 
+        <action
+            android:id="@+id/action_nav_forgot_password_to_nav_sent_password"
+            app:destination="@id/nav_sent_password" />
     </fragment>
 
     <fragment
@@ -20,6 +23,9 @@
         android:label="BulletinBoard"
         tools:layout="@layout/fragment_sent_password">
 
+        <action
+            android:id="@+id/action_nav_sent_password_to_nav_sign_in"
+            app:destination="@id/nav_sign_in" />
     </fragment>
 
     <fragment
@@ -28,6 +34,12 @@
         android:label="BulletinBoard"
         tools:layout="@layout/fragment_sign_in">
 
+        <action
+            android:id="@+id/action_nav_sign_in_to_nav_forgot_password"
+            app:destination="@id/nav_forgot_password" />
+        <action
+            android:id="@+id/action_nav_sign_in_to_nav_sign_up"
+            app:destination="@id/nav_sign_up" />
     </fragment>
 
     <fragment
@@ -36,6 +48,9 @@
         android:label="BulletinBoard"
         tools:layout="@layout/fragment_sign_up">
 
+        <action
+            android:id="@+id/action_nav_sign_up_to_nav_sign_in"
+            app:destination="@id/nav_sign_in" />
     </fragment>
 
 </navigation>

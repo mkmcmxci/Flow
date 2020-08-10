@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,7 +12,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:text="TextView"
+        android:padding="5dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/fragment_answer_header_row_answercount_textview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,12 +24,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
-        android:text="TextView"
+        android:padding="5dp"
+        android:gravity="right"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_answer_header_row_title_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_answer_header_row_content_textview" />
 
     <TextView
         android:id="@+id/fragment_answer_header_row_content_textview"
@@ -37,20 +41,34 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="5dp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_answer_header_row_username_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_answer_header_row_title_textview" />
 
     <TextView
         android:id="@+id/fragment_answer_header_row_answercount_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:text="TextView"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_answer_header_row_title_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fragment_answer_header_row_title_textview" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/black"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_answer_header_row_username_textview"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

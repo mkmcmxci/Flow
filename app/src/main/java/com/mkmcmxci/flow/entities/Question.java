@@ -61,5 +61,8 @@ public class Question {
         this.answerSize = answerSize;
     }
 
-
+    @Override
+    public String toString() {
+        return title;
+    }
 }
