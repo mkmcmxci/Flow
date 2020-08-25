@@ -53,11 +53,14 @@ public class LastAnsweredAdapter extends RecyclerView.Adapter<LastAnsweredAdapte
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("questionID", String.valueOf(lastAnsweredQuestionList.get(position).getId()));
-                bundle.putString("questionTitle", lastAnsweredQuestionList.get(position).getTitle());
-                bundle.putString("questionContent", lastAnsweredQuestionList.get(position).getContent());
-                bundle.putString("questionUsername", lastAnsweredQuestionList.get(position).getUsername());
-                bundle.putString("questionAnswerSize", String.valueOf(lastAnsweredQuestionList.get(position).getAnswerSize()));
+                bundle.putString("QuestionID", String.valueOf(lastAnsweredQuestionList.get(position).getId()));
+                bundle.putString("QuestionTitle", lastAnsweredQuestionList.get(position).getTitle());
+                bundle.putString("QuestionContent", lastAnsweredQuestionList.get(position).getContent());
+                bundle.putString("Username", lastAnsweredQuestionList.get(position).getUsername());
+                bundle.putInt("AnswerSize", lastAnsweredQuestionList.get(position).getAnswerSize());
+                bundle.putString("UserID", String.valueOf(lastAnsweredQuestionList.get(position).getQuestionUserID()));
+                bundle.putString("UserQuestionSize", String.valueOf(lastAnsweredQuestionList.get(position).getUserQuestionSize()));
+                bundle.putString("UserAnswerSize", String.valueOf(lastAnsweredQuestionList.get(position).getAnswerSize()));
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_flow_to_navigation_answer2, bundle);
             }

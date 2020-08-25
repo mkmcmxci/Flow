@@ -15,7 +15,11 @@
             app:destination="@id/navigation_answer" />
         <action
             android:id="@+id/action_navigation_flow_to_navigation_answer2"
-            app:destination="@id/navigation_answer" />
+            app:destination="@id/navigation_answer"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -38,7 +42,11 @@
         tools:layout="@layout/fragment_category_details" >
         <action
             android:id="@+id/action_navigation_find_category_row_to_navigation_answer"
-            app:destination="@id/navigation_answer" />
+            app:destination="@id/navigation_answer"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
         <action
             android:id="@+id/action_navigation_find_category_row_to_navigation_find"
             app:destination="@id/navigation_find" />
@@ -51,13 +59,31 @@
         tools:layout="@layout/fragment_answer" >
         <action
             android:id="@+id/action_navigation_answer_to_navigation_flow"
-            app:destination="@id/navigation_flow" />
+            app:destination="@id/navigation_flow"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_navigation_answer_to_navigation_find_category_row"
             app:destination="@id/navigation_find_category_row" />
         <action
             android:id="@+id/action_navigation_answer_self"
             app:destination="@id/navigation_answer" />
+        <action
+            android:id="@+id/action_navigation_answer_to_navigation_show_profile"
+            app:destination="@id/navigation_show_profile"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_navigation_answer_to_navigation_edit_question"
+            app:destination="@id/navigation_edit_question"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -68,9 +94,72 @@
 
     <fragment
         android:id="@+id/navigation_my_account"
-        android:name="com.mkmcmxci.flow.ui.my_account.MyAccountFragment"
+        android:name="com.mkmcmxci.flow.ui.myaccount.MyAccountFragment"
         android:label="@string/title_my_account"
-        tools:layout="@layout/fragment_my_account" />
+        tools:layout="@layout/fragment_my_account" >
+        <action
+            android:id="@+id/action_navigation_my_account_to_navigation_my_account_settings"
+            app:destination="@id/navigation_my_account_settings"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_navigation_my_account_to_navigation_answer"
+            app:destination="@id/navigation_answer"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_my_account_settings"
+        android:name="com.mkmcmxci.flow.ui.myaccount.MyAccountSettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_profile_settings" >
+        <action
+            android:id="@+id/action_navigation_my_account_settings_to_navigation_my_account"
+            app:destination="@id/navigation_my_account"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_navigation_my_account_settings_self"
+            app:destination="@id/navigation_my_account_settings" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_show_profile"
+        android:name="com.mkmcmxci.flow.ui.showprofile.ShowProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_show_profile" >
+
+        <action
+            android:id="@+id/action_navigation_show_profile_to_navigation_answer"
+            app:destination="@id/navigation_answer"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_edit_question"
+        android:name="com.mkmcmxci.flow.ui.showprofile.ShowProfileEditQuestionFragment"
+        android:label="@string/title_text_question"
+        tools:layout="@layout/fragment_edit_question" >
+
+        <action
+            android:id="@+id/action_navigation_edit_question_to_navigation_answer"
+            app:destination="@id/navigation_answer"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
 
 
 </navigation>

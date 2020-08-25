@@ -2,14 +2,20 @@ package com.mkmcmxci.flow.ui.find;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,38 +29,41 @@ import java.util.List;
 
 public class FindAdapter extends RecyclerView.Adapter<FindAdapter.FindViewHolder> {
 
-    Context findFragmentContext;
-    List<Category> findFragmentCategoryList;
+    Context mContext;
+    List<Category> mList;
 
-    public FindAdapter(Context findFragmentContext, List<Category> findFragmentCategoryList) {
-        this.findFragmentContext = findFragmentContext;
-        this.findFragmentCategoryList = findFragmentCategoryList;
+    public FindAdapter(Context context, List<Category> list) {
+        this.mContext = context;
+        this.mList = list;
     }
-
-
-
 
     @NonNull
     @Override
     public FindViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(findFragmentContext).inflate(R.layout.fragment_category_row, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_category_row, parent, false);
 
         return new FindAdapter.FindViewHolder(view);     }
 
     @Override
     public void onBindViewHolder(@NonNull FindViewHolder holder, final int position) {
 
-        holder.categoryName.setText(findFragmentCategoryList.get(position).getName());
+        holder.categoryName.setText(mList.get(position).getName());
 
         holder.categoryName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                /* Bundle to CategoryDetailsFragment */
+
                 Bundle bundle = new Bundle();
-                bundle.putString("catID", String.valueOf(findFragmentCategoryList.get(position).getId()));
-                bundle.putString("catName", findFragmentCategoryList.get(position).getName());
+                bundle.putString("catID", String.valueOf(mList.get(position).getId()));
+                bundle.putString("catName", mList.get(position).getName());
+
+                /* Bundle to CategoryDetailsFragment */
+
                 Navigation.findNavController(v).navigate(R.id.action_navigation_find_to_navigation_find_category_row, bundle);
+
 
             }
         });
@@ -63,7 +72,7 @@ public class FindAdapter extends RecyclerView.Adapter<FindAdapter.FindViewHolder
 
     @Override
     public int getItemCount() {
-        return findFragmentCategoryList.size();
+        return mList.size();
     }
 
     public class FindViewHolder extends RecyclerView.ViewHolder{

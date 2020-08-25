@@ -1,14 +1,12 @@
 package com.mkmcmxci.flow.tasks;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.Gravity;
 import android.widget.Toast;
 
+import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
 import com.mkmcmxci.flow.activity.MainActivity;
 import com.mkmcmxci.flow.entities.User;
 
@@ -27,23 +25,11 @@ import java.util.List;
 
 public class UserSignInTask extends AsyncTask<String, Void, String> {
 
-    ProgressDialog dialog;
     List<User> users = new ArrayList<>();
     Context context;
 
     public UserSignInTask(Context context) {
         this.context = context;
-    }
-
-    @Override
-    protected void onPreExecute() {
-
-        dialog = new ProgressDialog(context);
-        dialog.setTitle("Please Wait");
-        dialog.setMessage("Loading..");
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.show();
-
     }
 
     @Override
@@ -84,7 +70,6 @@ public class UserSignInTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
 
-
         try {
             JSONObject jObject = new JSONObject(s);
 
@@ -94,10 +79,10 @@ public class UserSignInTask extends AsyncTask<String, Void, String> {
 
                 JSONObject obj = (JSONObject) jArray.get(i);
 
-                users.add(new User(obj.getInt("user_id"),
-                        obj.getString("name"),
-                        obj.getString("mail"),
-                        obj.getString("password")));
+                users.add(new User(obj.getInt("UserID"),
+                        obj.getString("Username"),
+                        obj.getString("Mail"),
+                        obj.getString("Password"), obj.getInt("UserAnswerSize"), obj.getInt("UserQuestionSize")));
             }
 
 
@@ -107,17 +92,25 @@ public class UserSignInTask extends AsyncTask<String, Void, String> {
 
         }
 
-
-        dialog.dismiss();
-
         if (users.size() != 0) {
 
             Intent i = new Intent(context, MainActivity.class);
+            i.putExtra("UserID", users.get(0).getId());
+            i.putExtra("Username", users.get(0).getName());
+            i.putExtra("Mail", users.get(0).getMail());
+            i.putExtra("Password", users.get(0).getPassword());
 
-            i.putExtra("user_id", users.get(0).getId());
-            i.putExtra("name", users.get(0).getName());
-            i.putExtra("mail", users.get(0).getMail());
-            i.putExtra("password", users.get(0).getPassword());
+            SessionManagement sm = new SessionManagement(context);
+
+            sm.saveSession(new User(users.get(0).getId(),
+                    users.get(0).getName(),
+                    users.get(0).getMail(),
+                    users.get(0).getPassword(),
+                    users.get(0).getNumberOfAnswers(),
+                    users.get(0).getNumberOfQuestions()));
+
+
+
 
             context.startActivity(i);
 

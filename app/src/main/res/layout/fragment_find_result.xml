@@ -10,5 +10,6 @@
     <ListView
         android:id="@+id/fragment_find_result_list_view"
         android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:layout_height="match_parent" />
 </FrameLayout>

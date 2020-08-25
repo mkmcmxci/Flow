@@ -2,10 +2,7 @@ package com.mkmcmxci.flow.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.ArrayAdapter;
 
-import com.mkmcmxci.flow.ListContainer.MainFlowListContainer;
-import com.mkmcmxci.flow.activity.MainActivity;
 import com.mkmcmxci.flow.entities.Question;
 import com.mkmcmxci.flow.ui.flow.MainFlowAdapter;
 
@@ -27,17 +24,17 @@ public class MainFlowTask extends AsyncTask<String, Void, String> {
     ArrayList<Question> mainFlowQuestionList;
     Context context;
 
+
     public MainFlowTask(Context context, MainFlowAdapter mainFlowAdapter, ArrayList<Question> mainFlowQuestionList) {
         this.mainFlowAdapter = mainFlowAdapter;
         this.mainFlowQuestionList = mainFlowQuestionList;
         this.context = context;
     }
 
-
-
-
     @Override
     protected void onPreExecute() {
+
+
 
     }
 
@@ -88,25 +85,26 @@ public class MainFlowTask extends AsyncTask<String, Void, String> {
 
                 JSONObject obj = (JSONObject) jArray.get(i);
 
-                mainFlowQuestionList.add(new Question(obj.getInt("question_id"),
-                        obj.getString("title"),
-                        obj.getString("content"),
-                        obj.getString("username"),
-                        obj.getInt("answer_size")));
+                mainFlowQuestionList.add(new Question(obj.getInt("QuestionID"),
+                        obj.getString("QuestionTitle"),
+                        obj.getString("QuestionContent"),
+                        obj.getString("Username"),
+                        obj.getInt("AnswerSize"),
+                        obj.getInt("UserID"),
+                        obj.getInt("UserQuestionSize"),
+                        obj.getInt("UserAnswerSize")));
             }
 
+
             mainFlowAdapter.notifyDataSetChanged();
-
-            MainFlowListContainer m = new MainFlowListContainer();
-
-            m.saveMainList(context, mainFlowQuestionList);
-
 
 
         } catch (JSONException e) {
 
             e.printStackTrace();
         }
+
+
 
 
 

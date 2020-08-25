@@ -1,9 +1,11 @@
 package com.mkmcmxci.flow.ui.find;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,29 +20,34 @@ import java.util.List;
 
 public class CategoryFragment extends Fragment {
 
-    RecyclerView categoryFragmentRecView;
-    Category categoryFragmentCategory;
-    List<Category> categoryFragmentCategoryList;
-    FindAdapter findFragmentFindAdapter;
+    RecyclerView mRecView;
+    Category mCategory;
+    List<Category> mCategoryList;
+    FindAdapter mAdapter;
+    View mView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_category, container, false);
-
-
-        categoryFragmentRecView = v.findViewById(R.id.fragment_category_rec_view);
-
-        categoryFragmentCategory = new Category();
-
-        categoryFragmentCategoryList = categoryFragmentCategory.getCategoryList();
-
-        findFragmentFindAdapter = new FindAdapter(getContext(), categoryFragmentCategoryList);
-
-        categoryFragmentRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        categoryFragmentRecView.setAdapter(findFragmentFindAdapter);
-
-        return v;
+        mView = inflater.inflate(R.layout.fragment_category, container, false);
+        getViews();
+        init();
+        return mView;
     }
+
+    public void getViews(){
+        mRecView = mView.findViewById(R.id.fragment_category_rec_view);
+    }
+
+    public void init(){
+        mCategory = new Category();
+        mCategoryList = mCategory.getCategoryList();
+        mAdapter = new FindAdapter(getContext(), mCategoryList);
+        mRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecView.setAdapter(mAdapter);
+    }
+
+
+
+
 }

@@ -38,21 +38,19 @@ public class Category {
 
         List<Category> catList = new ArrayList<>();
 
-        Category c1 = new Category(1, "Soru");
-        Category c2 = new Category(2, "Sağlık");
-        Category c3 = new Category(3, "Müzik");
-        Category c4 = new Category(4, "Dizi/Film");
-        Category c5 = new Category(5, "Programlama");
-        Category c6 = new Category(6, "Eğitim");
-        Category c7 = new Category(7, "Kayıp");
-        Category c8 = new Category(8, "Kan Aranıyor");
-        Category c9 = new Category(9, "Kalacak Ev");
-        Category c10 = new Category(10, "Hayvan");
-        Category c11 = new Category(11, "Yer/Yön");
-        Category c12 = new Category(12, "Edebiyat");
-        Category c13 = new Category(13, "Siyaset");
-        Category c14 = new Category(14, "Bilim");
-        Category c15 = new Category(15, "Ekonomi");
+        Category c1 = new Category(1, "General");
+        Category c2 = new Category(2, "Health");
+        Category c3 = new Category(3, "Music");
+        Category c4 = new Category(4, "Movies");
+        Category c5 = new Category(5, "Programming");
+        Category c6 = new Category(6, "Education");
+        Category c7 = new Category(7, "Animal");
+        Category c8 = new Category(8, "Science");
+        Category c9 = new Category(9, "Airbnb");
+        Category c10 = new Category(10, "Economics");
+        Category c11 = new Category(11, "Sports");
+        Category c12 = new Category(12, "Literature");
+        Category c13 = new Category(13, "Politics");
 
         catList.add(c1);
         catList.add(c2);
@@ -67,8 +65,6 @@ public class Category {
         catList.add(c11);
         catList.add(c12);
         catList.add(c13);
-        catList.add(c14);
-        catList.add(c15);
 
         return catList;
     }

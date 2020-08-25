@@ -1,26 +1,26 @@
 package com.mkmcmxci.flow.entities;
 
-import java.util.Date;
-import java.util.List;
-
 public class User {
 
     private int id;
     private String name;
     private String mail;
     private String password;
-
+    private int numberOfQuestions;
+    private int numberOfAnswers;
 
     public User() {
         super();
     }
 
-
-    public User(int id, String name, String mail, String password) {
+    public User(int id, String name, String mail, String password, int numberOfAnswers, int numberOfQuestions) {
         this.id = id;
         this.name = name;
         this.mail = mail;
         this.password = password;
+        this.numberOfAnswers = numberOfAnswers;
+        this.numberOfQuestions = numberOfQuestions;
+
     }
 
     public int getId() {
@@ -53,6 +53,22 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getNumberOfQuestions() {
+        return numberOfQuestions;
+    }
+
+    public void setNumberOfQuestions(int numberOfQuestions) {
+        this.numberOfQuestions = numberOfQuestions;
+    }
+
+    public int getNumberOfAnswers() {
+        return numberOfAnswers;
+    }
+
+    public void setNumberOfAnswers(int numberOfAnswers) {
+        this.numberOfAnswers = numberOfAnswers;
     }
 
     @Override

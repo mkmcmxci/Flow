@@ -21,75 +21,54 @@ import com.mkmcmxci.flow.tasks.UserSignInTask;
 
 public class SignInFragment extends Fragment {
 
-    TextView signInFragmentWithoutSignInTextView;
-    TextView signInFragmentForgotPasswordTextView;
-    TextView signInFragmentRegisterTextView;
-    Button signInFragmentLoginButton;
-    EditText signInFragmentEmail;
-    EditText signInFragmentPassword;
-
-
+    TextView mForgotPassword, mRegister;
+    Button mLoginButton;
+    EditText mEmail, mPassword;
+    View mView;
+    final String URL = "http://10.0.2.2:8080/BulletinBoard/rest/userwebservices/getuserbymailandpassword/";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_sign_in, container, false);
+        mView = inflater.inflate(R.layout.fragment_sign_in, container, false);
+        getViews();
 
-        signInFragmentWithoutSignInTextView = v.findViewById(R.id.fragment_sign_in_without_signing);
-        signInFragmentForgotPasswordTextView = v.findViewById(R.id.fragment_sign_in_forgot_password);
-        signInFragmentRegisterTextView = v.findViewById(R.id.fragment_sign_in_register);
-        signInFragmentLoginButton = v.findViewById(R.id.fragment_sign_in_login_button);
-        signInFragmentEmail = v.findViewById(R.id.fragment_sign_in_email_input);
-        signInFragmentPassword = v.findViewById(R.id.fragment_sign_in_password_input);
-
-        signInFragmentWithoutSignInTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getContext(), MainActivity.class);
-                startActivity(i);
-            }
-        });
-
-        signInFragmentForgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+        mForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Navigation.findNavController(v).navigate(R.id.action_nav_sign_in_to_nav_forgot_password);
 
-
             }
         });
 
-        signInFragmentRegisterTextView.setOnClickListener(new View.OnClickListener() {
+        mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Navigation.findNavController(v).navigate(R.id.action_nav_sign_in_to_nav_sign_up);
 
-
-
             }
         });
 
-        signInFragmentLoginButton.setOnClickListener(new View.OnClickListener() {
+        mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 UserSignInTask ust = new UserSignInTask(getContext());
-
-                ust.execute("http://10.0.2.2:8080/BulletinBoard/rest/userwebservices/getuserbymailandpassword/" +
-                        signInFragmentEmail.getText().toString() + "/" +
-                        signInFragmentPassword.getText().toString());
-
-
-
-
-
+                ust.execute(URL + mEmail.getText().toString() + "/" + mPassword.getText().toString());
 
             }
         });
 
+        return mView;
+    }
 
-        return v;
+    public void getViews() {
+        mForgotPassword = mView.findViewById(R.id.fragment_sign_in_forgot_password);
+        mRegister = mView.findViewById(R.id.fragment_sign_in_register);
+        mLoginButton = mView.findViewById(R.id.fragment_sign_in_login_button);
+        mEmail = mView.findViewById(R.id.fragment_sign_in_email_input);
+        mPassword = mView.findViewById(R.id.fragment_sign_in_password_input);
     }
 }

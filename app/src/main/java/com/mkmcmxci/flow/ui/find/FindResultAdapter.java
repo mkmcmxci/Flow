@@ -23,14 +23,14 @@ import java.util.List;
 
 public class FindResultAdapter extends ArrayAdapter<Question> {
 
-    Context context;
+    Context mContext;
 
-    List<Question> listFull;
+    List<Question> mListFull;
 
     public FindResultAdapter(@NonNull Context context, List<Question> list) {
         super(context, 0, list);
-        listFull = new ArrayList<>(list);
-        this.context = context;
+        mListFull = new ArrayList<>(list);
+        this.mContext = context;
 
     }
 
@@ -59,12 +59,20 @@ public class FindResultAdapter extends ArrayAdapter<Question> {
             @Override
             public void onClick(View v) {
 
+                /* Bundle to AnswerFragment */
+
                 Bundle bundle = new Bundle();
-                bundle.putString("questionID", String.valueOf(listFull.get(position).getId()));
-                bundle.putString("questionTitle", listFull.get(position).getTitle());
-                bundle.putString("questionContent", listFull.get(position).getContent());
-                bundle.putString("questionUsername", listFull.get(position).getUsername());
-                bundle.putString("questionAnswerSize", String.valueOf(listFull.get(position).getAnswerSize()));
+                bundle.putString("QuestionID", String.valueOf(mListFull.get(position).getId()));
+                bundle.putString("QuestionTitle", mListFull.get(position).getTitle());
+                bundle.putString("QuestionContent", mListFull.get(position).getContent());
+                bundle.putString("Username", mListFull.get(position).getUsername());
+                bundle.putString("AnswerSize", String.valueOf(mListFull.get(position).getAnswerSize()));
+                bundle.putString("UserID", String.valueOf(mListFull.get(position).getQuestionUserID()));
+                bundle.putString("UserQuestionSize", String.valueOf(mListFull.get(position).getUserQuestionSize()));
+                bundle.putString("UserAnswerSize", String.valueOf(mListFull.get(position).getUserAnswerSize()));
+
+                /* Bundle to AnswerFragment */
+
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_find_to_navigation_answer, bundle);
 
@@ -87,10 +95,10 @@ public class FindResultAdapter extends ArrayAdapter<Question> {
             FilterResults results = new FilterResults();
             List<Question> suggestions = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
-                suggestions.addAll(listFull);
+                suggestions.addAll(mListFull);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for (Question item : listFull) {
+                for (Question item : mListFull) {
                     if (item.getTitle().toLowerCase().contains(filterPattern)) {
                         suggestions.add(item);
                     }

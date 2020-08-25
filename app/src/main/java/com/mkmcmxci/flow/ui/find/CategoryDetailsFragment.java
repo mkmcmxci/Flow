@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,42 +38,31 @@ import java.util.List;
 
 public class CategoryDetailsFragment extends Fragment {
 
-    RecyclerView categoryDetailsRecView;
-    CategoryDetailsAdapter categoryDetailsAdapter;
-    List<Question> categoryDetailsQuestionList;
-    CategoryDetailsTask categoryDetailsTask;
+    RecyclerView mRecView;
+    CategoryDetailsAdapter mAdapter;
+    List<Question> mQuestionList;
+    CategoryDetailsTask mTask;
     ProgressDialog categoryDetailsDialog;
     String catID, catName;
-    FloatingActionButton categoryDetailsFloatingActionButton;
-
+    FloatingActionButton mFab;
+    View mView;
+    final String URL = "http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/questionsbycategory/";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        View v = inflater.inflate(R.layout.fragment_category_details, container, false);
-
-        categoryDetailsRecView = v.findViewById(R.id.fragment_category_details_recycler_view);
-
-        categoryDetailsFloatingActionButton = v.findViewById(R.id.fragment_category_details_floating_button);
-
-        categoryDetailsQuestionList = new ArrayList<>();
+        mView = inflater.inflate(R.layout.fragment_category_details, container, false);
 
 
-        categoryDetailsAdapter = new CategoryDetailsAdapter(getContext(), categoryDetailsQuestionList);
-
-        categoryDetailsRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        categoryDetailsRecView.setAdapter(categoryDetailsAdapter);
+        /* Arguments from FindAdapter */
 
         catID = getArguments().getString("catID");
         catName = getArguments().getString("catName");
 
-        categoryDetailsTask = new CategoryDetailsTask();
+        getViews();
+        init();
 
-        categoryDetailsTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/questionsbycategory/" + catID);
-
-        categoryDetailsFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), PostQuestionActivity.class);
@@ -78,17 +70,32 @@ public class CategoryDetailsFragment extends Fragment {
             }
         });
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(catName);
+
+
         setHasOptionsMenu(true);
 
-        return v;
+        return mView;
 
+    }
+
+    public void getViews(){
+        mRecView = mView.findViewById(R.id.fragment_category_details_recycler_view);
+        mFab = mView.findViewById(R.id.fragment_category_details_floating_button);
+    }
+
+    public void init(){
+        mQuestionList = new ArrayList<>();
+        mAdapter = new CategoryDetailsAdapter(getContext(), mQuestionList);
+        mRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecView.setAdapter(mAdapter);
+        mTask = new CategoryDetailsTask();
+        mTask.execute(URL + catID);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         getActivity().onBackPressed();
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -98,10 +105,9 @@ public class CategoryDetailsFragment extends Fragment {
         protected void onPreExecute() {
 
             categoryDetailsDialog = new ProgressDialog(getContext());
-            categoryDetailsDialog.setTitle("Please Wait");
-            categoryDetailsDialog.setMessage("Loading..");
-            categoryDetailsDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             categoryDetailsDialog.show();
+            categoryDetailsDialog.setContentView(R.layout.custom_progress);
+            categoryDetailsDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         }
 
@@ -152,13 +158,16 @@ public class CategoryDetailsFragment extends Fragment {
 
                     JSONObject obj = (JSONObject) jArray.get(i);
 
-                    categoryDetailsQuestionList.add(new Question(obj.getInt("question_id"),
-                            obj.getString("title"),
-                            obj.getString("content"),
-                            obj.getString("username"),
-                            obj.getInt("answer_size")));
+                    mQuestionList.add(new Question(obj.getInt("QuestionID"),
+                            obj.getString("Title"),
+                            obj.getString("Content"),
+                            obj.getString("Username"),
+                            obj.getInt("AnswerSize"),
+                            obj.getInt("UserID"),
+                            obj.getInt("UserQuestionSize"),
+                            obj.getInt("UserAnswerSize")));
                 }
-                categoryDetailsAdapter.notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
 
             } catch (JSONException e) {
 

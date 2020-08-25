@@ -6,36 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".ui.flow.FlowFragment">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/fragment_flow_tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/fragment_flow_tab_one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Entries" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/fragment_flow_tab_two"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lasts" />
-
-
-    </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/fragment_flow_viewpager"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_flow_tab_layout" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/fragment_flow_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabIndicatorColor="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabTextAppearance="@style/TabLayoutTextStyle">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/fragment_flow_tab_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Posts" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/fragment_flow_tab_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Last Comments" />
+
+
+    </com.google.android.material.tabs.TabLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

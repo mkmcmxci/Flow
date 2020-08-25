@@ -1,5 +1,6 @@
 package com.mkmcmxci.flow.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.mkmcmxci.flow.entities.Question;
@@ -21,15 +22,17 @@ public class LastAnsweredTask extends AsyncTask<String, Void, String> {
 
     LastAnsweredAdapter lastAnsweredAdapter;
     List<Question> lastAnsweredQuestionList;
+    Context context;
 
-    public LastAnsweredTask(LastAnsweredAdapter lastAnsweredAdapter, List<Question> lastAnsweredQuestionList) {
+    public LastAnsweredTask(Context context,
+                            LastAnsweredAdapter lastAnsweredAdapter, List<Question> lastAnsweredQuestionList) {
         this.lastAnsweredAdapter = lastAnsweredAdapter;
         this.lastAnsweredQuestionList = lastAnsweredQuestionList;
+        this.context = context;
     }
 
     @Override
     protected void onPreExecute() {
-
 
     }
 
@@ -79,11 +82,14 @@ public class LastAnsweredTask extends AsyncTask<String, Void, String> {
 
                 JSONObject obj = (JSONObject) jArray.get(i);
 
-                lastAnsweredQuestionList.add(new Question(obj.getInt("question_id"),
-                        obj.getString("title"),
-                        obj.getString("content"),
-                        obj.getString("username"),
-                        obj.getInt("answer_size")));
+                lastAnsweredQuestionList.add(new Question(obj.getInt("QuestionID"),
+                        obj.getString("QuestionTitle"),
+                        obj.getString("QuestionContent"),
+                        obj.getString("Username"),
+                        obj.getInt("AnswerSize"),
+                        obj.getInt("UserID"),
+                        obj.getInt("UserQuestionSize"),
+                        obj.getInt("UserAnswerSize")));
             }
             lastAnsweredAdapter.notifyDataSetChanged();
 

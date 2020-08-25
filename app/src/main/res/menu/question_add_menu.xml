@@ -5,6 +5,7 @@
     <item
         android:id="@+id/question_add_menu_item"
         android:title="Post"
+        android:icon="@drawable/send_24"
         app:showAsAction="always"
         />
 </menu>

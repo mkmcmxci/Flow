@@ -16,48 +16,58 @@ import com.mkmcmxci.flow.R;
 
 public class FlowFragment extends Fragment {
 
-    TabLayout flowFragmentTabLayout;
-    TabItem flowFragmentTabItemOne, flowFragmentTabItemTwo;
-    ViewPager flowFragmentViewPager;
+    TabLayout mTabLayout;
+    TabItem mTabItemOne, mTabItemTwo;
+    ViewPager mViewPager;
+    View mView;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.fragment_flow, container, false);
+        getViews();
+        getTabs();
 
-        View root = inflater.inflate(R.layout.fragment_flow, container, false);
 
-        flowFragmentTabLayout = root.findViewById(R.id.fragment_flow_tab_layout);
-        flowFragmentTabItemOne = root.findViewById(R.id.fragment_flow_tab_one);
-        flowFragmentTabItemTwo = root.findViewById(R.id.fragment_flow_tab_two);
-        flowFragmentViewPager = root.findViewById(R.id.fragment_flow_viewpager);
 
-        PagerAdapter adapter = new PagerAdapter(getChildFragmentManager(), flowFragmentTabLayout.getTabCount());
 
-        flowFragmentViewPager.setAdapter(adapter);
 
-        flowFragmentViewPager.setOnTouchListener(new View.OnTouchListener() {
+        mViewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                return true;
+
+
+                return false;
             }
         });
 
-        flowFragmentTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                flowFragmentViewPager.setCurrentItem(tab.getPosition());
+                mViewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
-        return root;
+
+        return mView;
+    }
+
+    public void getViews() {
+        mTabLayout = mView.findViewById(R.id.fragment_flow_tab_layout);
+        mTabItemOne = mView.findViewById(R.id.fragment_flow_tab_one);
+        mTabItemTwo = mView.findViewById(R.id.fragment_flow_tab_two);
+        mViewPager = mView.findViewById(R.id.fragment_flow_viewpager);
+    }
+
+    public void getTabs(){
+        mTabLayout.setupWithViewPager(mViewPager);
+        FlowPagerAdapter adapter = new FlowPagerAdapter(getChildFragmentManager(), mTabLayout.getTabCount());
+        mViewPager.setAdapter(adapter);
     }
 
 

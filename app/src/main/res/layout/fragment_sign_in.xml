@@ -12,25 +12,33 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="200dp"
         android:layout_marginEnd="50dp"
+        android:background="@color/colorBackground"
         android:ems="10"
-        android:hint="Email"
+        android:hint="E-mail"
         android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_sign_in_app_logo_image" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/fragment_sign_in_password_input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
+        android:background="@color/colorBackground"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_sign_in_email_input" />
@@ -40,48 +48,33 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
+        android:background="@color/colorAccent"
+        android:shadowColor="@color/colorText"
+        android:shadowDx="5"
+        android:shadowDy="5"
         android:text="Sign In"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_sign_in_forgot_password" />
-
-    <ImageView
-        android:id="@+id/fragment_sign_in_app_logo_image"
-        android:layout_width="118dp"
-        android:layout_height="118dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:mipmap/sym_def_app_icon" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_sign_in_password_input" />
 
     <TextView
         android:id="@+id/fragment_sign_in_forgot_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="100dp"
+        android:clickable="true"
         android:text="Forgot Password?"
-        android:clickable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_sign_in_password_input" />
-
-    <TextView
-        android:id="@+id/fragment_sign_in_without_signing"
-        android:layout_width="wrap_content"
-        android:clickable="true"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
-        android:text="Use without signing"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_sign_in_login_button" />
 
@@ -91,6 +84,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
         android:text="Register"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fragment_sign_in_forgot_password" />
 </androidx.constraintlayout.widget.ConstraintLayout>

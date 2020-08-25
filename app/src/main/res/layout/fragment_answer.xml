@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_answer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_answer">
+    android:background="@color/colorBackground">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_answer_recycler_view"
@@ -16,10 +16,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/fragment_answer_bottom_sheet"
+        android:id="@+id/fragment_answer_bottom_sheet_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/secondary_text_dark"
+        android:background="@color/colorBackground"
         app:behavior_hideable="true"
         app:behavior_peekHeight="50dp"
         app:layout_behavior="@string/bottom_sheet_behavior">
@@ -31,6 +31,88 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorAccent"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/fragment_answer_cancel_text_view_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="left"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:text="Cancel"
+                    android:textColor="@color/colorText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fragment_answer_send_text_view_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:gravity="right"
+                    android:paddingTop="10dp"
+                    android:paddingRight="20dp"
+                    android:text="Send"
+                    android:textColor="@color/colorText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/fragment_answer_bottom_sheet_editText_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Add a comment"
+                android:inputType="textMultiLine"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="40dp"
+                android:textColor="@color/colorText" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/fragment_answer_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBackground"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="50dp"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorAccent"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
@@ -39,37 +121,47 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="left"
                     android:clickable="true"
+                    android:gravity="left"
                     android:paddingLeft="20dp"
-                    android:text="Cancel"/>
+                    android:paddingTop="10dp"
+                    android:text="Cancel"
+                    android:textColor="@color/colorText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/fragment_answer_send_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:clickable="true"
-                    android:paddingRight="20dp"
                     android:layout_weight="1"
-                    android:text="Send"/>
-
+                    android:clickable="true"
+                    android:gravity="right"
+                    android:paddingTop="10dp"
+                    android:paddingRight="20dp"
+                    android:text="Send"
+                    android:textColor="@color/colorText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
 
 
-
-        <EditText
-            android:id="@+id/fragment_answer_bottom_sheet_editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="start|top"
-            android:padding="3dp"
-            android:inputType="textMultiLine"
-            android:hint="Add Answer"
-            android:background="@android:color/transparent"/>
+            <EditText
+                android:id="@+id/fragment_answer_bottom_sheet_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Add a comment"
+                android:inputType="textMultiLine"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="40dp"
+                android:textColor="@color/colorText" />
 
         </LinearLayout>
 

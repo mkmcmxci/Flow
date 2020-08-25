@@ -24,13 +24,18 @@
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:labelVisibilityMode="unlabeled"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:itemBackground="@android:color/transparent"
         app:layout_constraintHorizontal_bias="0.0"
+        app:itemIconTint="@color/nav_bar_color"
+
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment"
         app:menu="@menu/bottom_nav_menu" />
+
 
 
 

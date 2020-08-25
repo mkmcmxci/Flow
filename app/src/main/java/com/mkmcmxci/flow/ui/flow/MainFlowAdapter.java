@@ -59,11 +59,14 @@ public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFl
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("questionID", String.valueOf(mainFlowQuestionList.get(position).getId()));
-                bundle.putString("questionTitle", mainFlowQuestionList.get(position).getTitle());
-                bundle.putString("questionContent", mainFlowQuestionList.get(position).getContent());
-                bundle.putString("questionUsername", mainFlowQuestionList.get(position).getUsername());
-                bundle.putString("questionAnswerSize", String.valueOf(mainFlowQuestionList.get(position).getAnswerSize()));
+                bundle.putString("QuestionID", String.valueOf(mainFlowQuestionList.get(position).getId()));
+                bundle.putString("QuestionTitle", mainFlowQuestionList.get(position).getTitle());
+                bundle.putString("QuestionContent", mainFlowQuestionList.get(position).getContent());
+                bundle.putString("Username", mainFlowQuestionList.get(position).getUsername());
+                bundle.putInt("AnswerSize", mainFlowQuestionList.get(position).getAnswerSize());
+                bundle.putString("UserID", String.valueOf(mainFlowQuestionList.get(position).getQuestionUserID()));
+                bundle.putString("UserQuestionSize", String.valueOf(mainFlowQuestionList.get(position).getUserQuestionSize()));
+                bundle.putString("UserAnswerSize", String.valueOf(mainFlowQuestionList.get(position).getUserAnswerSize()));
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_flow_to_navigation_answer2, bundle);
 

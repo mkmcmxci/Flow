@@ -2,6 +2,7 @@ package com.mkmcmxci.flow.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,22 +18,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.entities.Category;
+import com.mkmcmxci.flow.interfaces.PassToActs;
 import com.mkmcmxci.flow.tasks.QuestionSendTask;
+import com.mkmcmxci.flow.ui.flow.MainFlowFragment;
 
 import java.util.List;
 
-public class PostQuestionActivity extends AppCompatActivity {
+public class PostQuestionActivity extends AppCompatActivity implements PassToActs {
 
     Spinner postQuestionSpinner;
     EditText postQuestionTitleText;
     EditText postQuestionContentText;
     List<Category> spinnerArray;
     int spinInt;
+    static int userID;
+    static String username, password, mail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_post_question);
 
         postQuestionSpinner = findViewById(R.id.activity_post_question_spinner);
@@ -44,9 +48,9 @@ public class PostQuestionActivity extends AppCompatActivity {
         spinnerArray = c.getCategoryList();
 
         final ArrayAdapter<Category> spinnerAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, spinnerArray);
+                this, R.layout.spinner_main_row, spinnerArray);
 
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_row);
         Spinner sItems = (Spinner) findViewById(R.id.activity_post_question_spinner);
         sItems.setAdapter(spinnerAdapter);
 
@@ -66,6 +70,7 @@ public class PostQuestionActivity extends AppCompatActivity {
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
 
     }
 
@@ -90,21 +95,38 @@ public class PostQuestionActivity extends AppCompatActivity {
                 questionSendTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/addquestion/" +
                         postQuestionTitleText.getText().toString() + "/" +
                         postQuestionContentText.getText().toString() + "/" +
-                        String.valueOf(spinInt) +
-                        "/1");
+                        spinInt + "/" +
+                        userID);
+
 
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("UserID",userID);
+                i.putExtra("Username",username);
+                i.putExtra("Password",password);
+                i.putExtra("Mail",mail);
+
 
                 startActivity(i);
 
-            case android.R.id.home:
-                finish();
+
+
 
             default:
+                onBackPressed();
+                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
                 return super.onOptionsItemSelected(item);
 
         }
 
     }
 
+    @Override
+    public void onPassToAct(int userID, String name, String mail, String password) {
+        this.userID = userID;
+        this.username = name;
+        this.password = password;
+        this.mail = mail;
+
+
+    }
 }

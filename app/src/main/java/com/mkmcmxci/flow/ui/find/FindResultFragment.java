@@ -50,7 +50,6 @@ public class FindResultFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
         View v = inflater.inflate(R.layout.fragment_find_result, container, false);
 
         searchListView = v.findViewById(R.id.fragment_find_result_list_view);
@@ -58,9 +57,6 @@ public class FindResultFragment extends Fragment {
         SearchTask asyncTask = new SearchTask();
 
         asyncTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/getallquestions");
-
-
-
 
         return v;
     }
@@ -121,11 +117,14 @@ public class FindResultFragment extends Fragment {
 
                     JSONObject obj = (JSONObject) jArray.get(i);
 
-                    searchQuestionList.add(new Question(obj.getInt("question_id"),
-                            obj.getString("title"),
-                            obj.getString("content"),
-                            obj.getString("username"),
-                            obj.getInt("answer_size")));
+                    searchQuestionList.add(new Question(obj.getInt("QuestionID"),
+                            obj.getString("QuestionTitle"),
+                            obj.getString("QuestionContent"),
+                            obj.getString("Username"),
+                            obj.getInt("AnswerSize"),
+                            obj.getInt("UserID"),
+                            obj.getInt("UserQuestionSize"),
+                            obj.getInt("UserAnswerSize")));
                 }
 
 

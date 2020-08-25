@@ -11,5 +11,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_category_rec_view"
         android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:layout_height="match_parent" />
 </FrameLayout>

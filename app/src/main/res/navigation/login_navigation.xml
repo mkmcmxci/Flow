@@ -9,48 +9,69 @@
     <fragment
         android:id="@+id/nav_forgot_password"
         android:name="com.mkmcmxci.flow.ui.login.ForgotPasswordFragment"
-        android:label="BulletinBoard"
+        android:label="Forgot Password"
         tools:layout="@layout/fragment_forgot_password">
 
         <action
             android:id="@+id/action_nav_forgot_password_to_nav_sent_password"
-            app:destination="@id/nav_sent_password" />
+            app:destination="@id/nav_sent_password"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:launchSingleTop="false"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_sent_password"
         android:name="com.mkmcmxci.flow.ui.login.SentPasswordFragment"
-        android:label="BulletinBoard"
+        android:label="Sent Password"
         tools:layout="@layout/fragment_sent_password">
 
         <action
             android:id="@+id/action_nav_sent_password_to_nav_sign_in"
-            app:destination="@id/nav_sign_in" />
+            app:destination="@id/nav_sign_in"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_sign_in"
         android:name="com.mkmcmxci.flow.ui.login.SignInFragment"
-        android:label="BulletinBoard"
+        android:label="@string/title_flow"
         tools:layout="@layout/fragment_sign_in">
 
         <action
             android:id="@+id/action_nav_sign_in_to_nav_forgot_password"
-            app:destination="@id/nav_forgot_password" />
+            app:destination="@id/nav_forgot_password"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_nav_sign_in_to_nav_sign_up"
-            app:destination="@id/nav_sign_up" />
+            app:destination="@id/nav_sign_up"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_sign_up"
         android:name="com.mkmcmxci.flow.ui.login.SignUpFragment"
-        android:label="BulletinBoard"
+        android:label="Sign Up"
         tools:layout="@layout/fragment_sign_up">
 
         <action
             android:id="@+id/action_nav_sign_up_to_nav_sign_in"
-            app:destination="@id/nav_sign_in" />
+            app:destination="@id/nav_sign_in"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
 </navigation>

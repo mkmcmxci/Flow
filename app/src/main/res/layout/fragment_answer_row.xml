@@ -3,37 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground">
 
     <TextView
-        android:id="@+id/fragment_answer_row_answer_textview"
+        android:id="@+id/fragment_answer_row_answer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:padding="5dp"
-        android:text="TextView"
+        android:textColor="@color/colorText"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/fragment_answer_row_username_textview"
+        android:id="@+id/fragment_answer_row_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="right"
+        android:clickable="true"
+        android:gravity="left"
         android:padding="5dp"
-        android:text="TextView"
-        android:textAlignment="textEnd"
-        android:textSize="14dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorText"
+        android:textSize="16dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_answer_row_answer_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_answer_row_answer" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,10 +43,41 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
-        android:background="@android:color/black"
+        android:background="@color/colorAccent"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_answer_row_username_textview"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/fragment_answer_row_username"></LinearLayout>
+
+    <ImageView
+        android:id="@+id/fragment_answer_row_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_answer_row_username"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_answer_row_delete"
+        app:layout_constraintTop_toTopOf="@+id/fragment_answer_row_username"
+        app:srcCompat="@drawable/edit_24" />
+
+    <ImageView
+        android:id="@+id/fragment_answer_row_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_answer_row_edit"
+        app:layout_constraintEnd_toStartOf="@+id/fragment_answer_row_share"
+        app:layout_constraintTop_toTopOf="@+id/fragment_answer_row_edit"
+        app:srcCompat="@drawable/delete_24" />
+
+    <ImageView
+        android:id="@+id/fragment_answer_row_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_answer_row_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fragment_answer_row_delete"
+        app:srcCompat="@drawable/share_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

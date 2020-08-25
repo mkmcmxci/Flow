@@ -24,6 +24,7 @@
 
         <activity
             android:name=".activity.LoginActivity"
+            android:noHistory="true"
             android:label="@string/title_login">
 
             <intent-filter>
@@ -34,6 +35,20 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:label="@string/title_change_password">
+        </activity>
+
+        <activity
+            android:name=".activity.SendMessageActivity"
+            android:label="@string/title_message">
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
     </application>
 

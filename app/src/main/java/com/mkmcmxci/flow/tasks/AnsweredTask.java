@@ -1,11 +1,10 @@
 package com.mkmcmxci.flow.tasks;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.mkmcmxci.flow.entities.Answer;
 import com.mkmcmxci.flow.ui.flow.AnswerAdapter;
-import com.mkmcmxci.flow.ui.flow.AnswerFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,10 +78,18 @@ public class AnsweredTask extends AsyncTask<String, Void, String> {
 
                 JSONObject obj = (JSONObject) jArray.get(i);
 
-                answeredItemList.add(new Answer(obj.getString("answer_username"),
-                        obj.getString("answer_content"),
-                        obj.getString("question_title"),
-                        obj.getInt("answer_size")));
+                answeredItemList.add(new Answer(obj.getString("Username"),
+                        obj.getString("AnswerContent"),
+                        obj.getString("QuestionTitle"),
+                        obj.getInt("AnswerCount"),
+                        obj.getInt("AnswerUserID"),
+                        obj.getInt("UserQuestionSize"),
+                        obj.getInt("UserAnswerSize"),
+                        obj.getInt("QuestionID"),
+                        obj.getInt("QuestionUserID"),
+                        obj.getInt("AnswerID"),
+                        obj.getString("QuestionContent"),
+                        obj.getString("QuestionUsername")));
 
             }
             answeredAdapter.notifyDataSetChanged();
@@ -91,6 +98,8 @@ public class AnsweredTask extends AsyncTask<String, Void, String> {
 
             e.printStackTrace();
         }
+
+        Log.i("Dev",answeredItemList.toString());
 
     }
 
