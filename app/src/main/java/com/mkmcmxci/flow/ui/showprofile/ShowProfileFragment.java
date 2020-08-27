@@ -15,21 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.mkmcmxci.flow.R;
 
 import com.mkmcmxci.flow.activity.SendMessageActivity;
 import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
-import com.mkmcmxci.flow.ui.flow.FlowPagerAdapter;
-import com.mkmcmxci.flow.ui.myaccount.MyAccountFragment;
-import com.mkmcmxci.flow.ui.myaccount.MyAccountPagerAdapter;
-
-import java.util.ArrayList;
 
 public class ShowProfileFragment extends Fragment {
 
@@ -50,8 +43,7 @@ public class ShowProfileFragment extends Fragment {
         getViews();
         getTabs();
 
-        ShowProfileQuestionFragment spqfa = new ShowProfileQuestionFragment();
-        spqfa.showProfileListener(userID, username);
+
 
 
         mViewPager.setOnTouchListener(new View.OnTouchListener() {
@@ -108,10 +100,10 @@ public class ShowProfileFragment extends Fragment {
 
         if (item.getItemId() == R.id.message_menu_item) {
 
-            Intent i = new Intent(getContext(), SendMessageActivity.class);
-            i.putExtra("Username",username);
-            i.putExtra("UserID",userID);
-            startActivity(i);
+            Intent intent = new Intent(getContext(), SendMessageActivity.class);
+            intent.putExtra("Username",username);
+            intent.putExtra("UserID",userID);
+            startActivity(intent);
 
 
         } else {

@@ -55,9 +55,6 @@ public class ShowProfileAnswerFragmentAdapter extends RecyclerView.Adapter<ShowP
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_show_profile_to_navigation_answer, bundle);
 
-
-
-
             }
         });
 

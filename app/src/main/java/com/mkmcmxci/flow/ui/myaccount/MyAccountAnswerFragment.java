@@ -14,12 +14,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.entities.Answer;
-import com.mkmcmxci.flow.interfaces.PassToFrags;
+import com.mkmcmxci.flow.listeners.PassToFragmentsListener;
+import com.mkmcmxci.flow.sharedpreferences.Services;
+import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
 import com.mkmcmxci.flow.tasks.MyAccountAnswerTask;
 
 import java.util.ArrayList;
 
-public class MyAccountAnswerFragment extends Fragment implements PassToFrags {
+public class MyAccountAnswerFragment extends Fragment {
 
     RecyclerView mRecView;
     MyAccountAnswerAdapter mAdapter;
@@ -27,8 +29,7 @@ public class MyAccountAnswerFragment extends Fragment implements PassToFrags {
     MyAccountAnswerTask mTask;
     SwipeRefreshLayout mSwipeRefresh;
     View mView;
-    static int userID;
-    final String URL = "http://10.0.2.2:8080/BulletinBoard/rest/answerwebservices/answerbyuser/";
+    //static int userID;
 
     @Nullable
     @Override
@@ -41,9 +42,7 @@ public class MyAccountAnswerFragment extends Fragment implements PassToFrags {
             @Override
             public void onRefresh() {
 
-                mAnswerList = new ArrayList<>();
-                mTask = new MyAccountAnswerTask(getContext(), mAdapter, mAnswerList);
-                mTask.execute(URL+ userID);
+                init();
                 mSwipeRefresh.setRefreshing(false);
             }
         });
@@ -51,12 +50,14 @@ public class MyAccountAnswerFragment extends Fragment implements PassToFrags {
     return mView;
 
     }
-
+/*
     @Override
-    public void onPassToFrags(int userID, String name, String mail, String password) {
+    public void onPassToFragments(int userID, String name, String mail, String password) {
         this.userID = userID;
 
     }
+
+ */
 
     public void getViews() {
         mRecView = mView.findViewById(R.id.fragment_my_account_answer_recycler_view);
@@ -69,6 +70,6 @@ public class MyAccountAnswerFragment extends Fragment implements PassToFrags {
         mRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecView.setAdapter(mAdapter);
         mTask = new MyAccountAnswerTask(getContext(), mAdapter, mAnswerList);
-        mTask.execute(URL + userID);
+        mTask.execute(Services.answerByUser(SessionManagement.loadUserID()));
     }
 }

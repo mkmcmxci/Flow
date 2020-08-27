@@ -2,7 +2,6 @@ package com.mkmcmxci.flow.ui.flow;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,102 +13,82 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mkmcmxci.flow.R;
-import com.mkmcmxci.flow.activity.MainActivity;
 import com.mkmcmxci.flow.activity.PostQuestionActivity;
 import com.mkmcmxci.flow.entities.Question;
-import com.mkmcmxci.flow.interfaces.PassToFrags;
+import com.mkmcmxci.flow.sharedpreferences.Services;
+import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
 import com.mkmcmxci.flow.tasks.MainFlowTask;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainFlowFragment extends Fragment implements PassToFrags {
+public class MainFlowFragment extends Fragment {
 
-    RecyclerView mainFlowRecView;
-    MainFlowAdapter mainFlowAdapter;
-    ArrayList<Question> mainFlowQuestionList;
-    FloatingActionButton mainFlowFloatingActionButton;
-    MainFlowTask mainFlowTask;
-    SwipeRefreshLayout mainFlowSwipeRefresh;
-    static int userID;
-    static String username, password, mail;
-    View mainFlowView;
+    RecyclerView mRecView;
+    MainFlowAdapter mAdapter;
+    List<Question> mQuestionList;
+    FloatingActionButton mFab;
+    MainFlowTask mTask;
+    SwipeRefreshLayout mSwipeRefresh;
+    int userID;
+    String username, password, mail;
+    View mView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mainFlowView = inflater.inflate(R.layout.fragment_main_flow, container, false);
+        mView = inflater.inflate(R.layout.fragment_main_flow, container, false);
         getViews();
-
-        mainFlowQuestionList = new ArrayList<>();
-
-        mainFlowAdapter = new MainFlowAdapter(getContext(), mainFlowQuestionList);
-
-        mainFlowRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        mainFlowRecView.setAdapter(mainFlowAdapter);
-
-        mainFlowTask = new MainFlowTask(getContext(), mainFlowAdapter, mainFlowQuestionList);
-
-        mainFlowTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/getallquestions");
+        getSession();
 
 
-        mainFlowFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+        init();
+
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(getActivity(), PostQuestionActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(getActivity(), PostQuestionActivity.class);
+                startActivity(intent);
 
             }
         });
 
-        mainFlowSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
-                mainFlowQuestionList = new ArrayList<>();
+                init();
 
-                mainFlowAdapter = new MainFlowAdapter(getContext(), mainFlowQuestionList);
-
-                mainFlowRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-                mainFlowRecView.setAdapter(mainFlowAdapter);
-
-                mainFlowTask = new MainFlowTask(getContext(), mainFlowAdapter, mainFlowQuestionList);
-
-                mainFlowTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/getallquestions");
-
-                mainFlowSwipeRefresh.setRefreshing(false);
+                mSwipeRefresh.setRefreshing(false);
             }
         });
 
-        PostQuestionActivity pqa = new PostQuestionActivity();
-
-        pqa.onPassToAct(userID, username, mail, password);
-
-
-        return mainFlowView;
+        return mView;
     }
 
-
-    @Override
-    public void onPassToFrags(int userID, String name, String mail, String password) {
-
-        this.userID = userID;
-        this.username = name;
-        this.password = password;
-        this.mail = mail;
-
+    private void init() {
+        mQuestionList = new ArrayList<>();
+        mAdapter = new MainFlowAdapter(getContext(), mQuestionList);
+        mRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecView.setAdapter(mAdapter);
+        mTask = new MainFlowTask(getContext(), mAdapter, mQuestionList);
+        mTask.execute(Services.getAllQuestions());
     }
 
-    public void getViews() {
+    private void getViews() {
+        mRecView = mView.findViewById(R.id.fragment_main_flow_recycler_view);
+        mSwipeRefresh = mView.findViewById(R.id.fragment_main_flow_swipe_refresh);
+        mFab = mView.findViewById(R.id.fragment_main_flow_floating_button);
+    }
 
-        mainFlowRecView = mainFlowView.findViewById(R.id.fragment_main_flow_recycler_view);
-        mainFlowSwipeRefresh =  mainFlowView.findViewById(R.id.fragment_main_flow_swipe_refresh);
-        mainFlowFloatingActionButton = mainFlowView.findViewById(R.id.fragment_main_flow_floating_button);
+    private void getSession() {
+        userID = SessionManagement.loadUserID();
+        username = SessionManagement.loadUsername();
+        password = SessionManagement.loadPassword();
+        mail = SessionManagement.loadMail();
 
     }
 

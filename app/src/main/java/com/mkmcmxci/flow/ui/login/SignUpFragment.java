@@ -1,8 +1,6 @@
 package com.mkmcmxci.flow.ui.login;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,19 +14,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.Navigation;
 
 import com.mkmcmxci.flow.R;
+import com.mkmcmxci.flow.sharedpreferences.Services;
 import com.mkmcmxci.flow.sharedpreferences.Validation;
-import com.mkmcmxci.flow.tasks.UserRegisterTask;
-
-import org.w3c.dom.Text;
-
-import java.util.regex.Pattern;
+import com.mkmcmxci.flow.tasks.PostDataTask;
 
 public class SignUpFragment extends Fragment {
 
@@ -36,7 +28,6 @@ public class SignUpFragment extends Fragment {
     TextView mUsername, mMail, mPassword;
     CheckBox mCheckBox;
     View mView;
-    final String URL = "http://10.0.2.2:8080/BulletinBoard/rest/userwebservices/registeruser/";
 
     @Nullable
     @Override
@@ -92,10 +83,9 @@ public class SignUpFragment extends Fragment {
 
         } else {
 
-            UserRegisterTask task = new UserRegisterTask();
+            PostDataTask task = new PostDataTask();
 
-            task.execute(URL + mMail.getText().toString() + "/" + mUsername.getText().toString() + "/" +
-                    mPassword.getText().toString());
+            task.execute(Services.registerUser(mMail.getText().toString(), mUsername.getText().toString(), mPassword.getText().toString()));
 
             Navigation.findNavController(mView).navigate(R.id.action_nav_sign_up_to_nav_sign_in);
 

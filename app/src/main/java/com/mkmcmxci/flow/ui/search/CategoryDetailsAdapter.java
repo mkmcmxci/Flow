@@ -1,8 +1,7 @@
-package com.mkmcmxci.flow.ui.find;
+package com.mkmcmxci.flow.ui.search;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.entities.Question;
-import com.mkmcmxci.flow.ui.flow.MainFlowAdapter;
 
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetails
 
     @Override
     public void onBindViewHolder(@NonNull CategoryDetailsViewHolder holder, final int position) {
-        holder.questionTitle.setText(mQuestionList.get(position).getTitle());
+        holder.title.setText(mQuestionList.get(position).getTitle());
 
         if (mQuestionList.get(position).getAnswerSize() == 0) {
 
@@ -51,11 +49,9 @@ public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetails
 
         }
 
-        holder.questionTitle.setOnClickListener(new View.OnClickListener() {
+        holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                /* Category rows to Answer Fragment */
 
                 Bundle bundle = new Bundle();
                 bundle.putString("QuestionID", String.valueOf(mQuestionList.get(position).getId()));
@@ -66,8 +62,6 @@ public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetails
                 bundle.putString("UserID", String.valueOf(mQuestionList.get(position).getQuestionUserID()));
                 bundle.putString("UserQuestionSize", String.valueOf(mQuestionList.get(position).getUserQuestionSize()));
                 bundle.putString("UserAnswerSize", String.valueOf(mQuestionList.get(position).getUserQuestionSize()));
-
-                /* Category rows to Answer Fragment */
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_find_category_row_to_navigation_answer, bundle);
 
@@ -82,13 +76,13 @@ public class CategoryDetailsAdapter extends RecyclerView.Adapter<CategoryDetails
 
     public class CategoryDetailsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView questionTitle;
+        TextView title;
         TextView answerCount;
 
         public CategoryDetailsViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            questionTitle = itemView.findViewById(R.id.fragment_entry_row_title_textview);
+            title = itemView.findViewById(R.id.fragment_entry_row_title_textview);
             answerCount = itemView.findViewById(R.id.fragment_entry_row_answer_textview);
 
         }

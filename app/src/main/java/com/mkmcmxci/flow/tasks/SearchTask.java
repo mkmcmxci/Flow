@@ -2,9 +2,10 @@ package com.mkmcmxci.flow.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.ListView;
 
 import com.mkmcmxci.flow.entities.Question;
-import com.mkmcmxci.flow.ui.flow.MainFlowAdapter;
+import com.mkmcmxci.flow.ui.search.FindResultAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,23 +20,28 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFlowTask extends AsyncTask<String, Void, String> {
+public class SearchTask extends AsyncTask<String, Void, String> {
 
-    MainFlowAdapter mainFlowAdapter;
-    List<Question> mainFlowQuestionList;
-    Context context;
+    List<Question> mList = new ArrayList<>();
+    Context mContext;
+    FindResultAdapter mAdapter;
+    String mText;
+    ListView mListView;
 
 
-    public MainFlowTask(Context context, MainFlowAdapter mainFlowAdapter, List<Question> mainFlowQuestionList) {
-        this.mainFlowAdapter = mainFlowAdapter;
-        this.mainFlowQuestionList = mainFlowQuestionList;
-        this.context = context;
+
+
+    public SearchTask(Context context, FindResultAdapter adapter, String text, ListView listView) {
+        this.mContext = context;
+        this.mAdapter = adapter;
+        this.mText = text;
+        this.mListView = listView;
+
     }
+
 
     @Override
     protected void onPreExecute() {
-
-
 
     }
 
@@ -77,6 +83,7 @@ public class MainFlowTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
 
+
         try {
             JSONObject jObject = new JSONObject(s);
 
@@ -86,7 +93,7 @@ public class MainFlowTask extends AsyncTask<String, Void, String> {
 
                 JSONObject obj = (JSONObject) jArray.get(i);
 
-                mainFlowQuestionList.add(new Question(obj.getInt("QuestionID"),
+                mList.add(new Question(obj.getInt("QuestionID"),
                         obj.getString("QuestionTitle"),
                         obj.getString("QuestionContent"),
                         obj.getString("Username"),
@@ -97,19 +104,27 @@ public class MainFlowTask extends AsyncTask<String, Void, String> {
             }
 
 
-            mainFlowAdapter.notifyDataSetChanged();
-
-
         } catch (JSONException e) {
 
             e.printStackTrace();
         }
 
+        if (mContext != null) {
 
+            mAdapter = new FindResultAdapter(mContext, mList);
 
+            mAdapter.getFilter().filter(mText);
 
+            mListView.setAdapter(mAdapter);
+
+            mAdapter.notifyDataSetChanged();
+
+        }
 
 
     }
 
+
 }
+
+

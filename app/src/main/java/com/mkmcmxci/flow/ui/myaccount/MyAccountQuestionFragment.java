@@ -14,12 +14,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.entities.Question;
-import com.mkmcmxci.flow.interfaces.PassToFrags;
+import com.mkmcmxci.flow.listeners.PassToFragmentsListener;
+import com.mkmcmxci.flow.sharedpreferences.Services;
+import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
 import com.mkmcmxci.flow.tasks.MyAccountQuestionTask;
 
 import java.util.ArrayList;
 
-public class MyAccountQuestionFragment extends Fragment implements PassToFrags {
+public class MyAccountQuestionFragment extends Fragment {
 
     RecyclerView mRecView;
     MyAccountQuestionAdapter mAdapter;
@@ -27,8 +29,7 @@ public class MyAccountQuestionFragment extends Fragment implements PassToFrags {
     MyAccountQuestionTask mTask;
     SwipeRefreshLayout mSwipeRefresh;
     View mView;
-    static int userID;
-    final String URL = "http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/questionsbyuser/";
+    //static int userID;
 
     @Nullable
     @Override
@@ -62,12 +63,15 @@ public class MyAccountQuestionFragment extends Fragment implements PassToFrags {
         mRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecView.setAdapter(mAdapter);
         mTask = new MyAccountQuestionTask(getContext(), mAdapter, mQuestionList);
-        mTask.execute(URL + userID);
+        mTask.execute(Services.questionByUser(SessionManagement.loadUserID()));
     }
 
+    /*
     @Override
-    public void onPassToFrags(int userID, String name, String mail, String password) {
+    public void onPassToFragments(int userID, String name, String mail, String password) {
         this.userID = userID;
 
     }
+
+     */
 }

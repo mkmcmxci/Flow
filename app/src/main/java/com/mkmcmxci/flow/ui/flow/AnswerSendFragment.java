@@ -1,6 +1,5 @@
 package com.mkmcmxci.flow.ui.flow;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,71 +8,75 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.mkmcmxci.flow.R;
-import com.mkmcmxci.flow.entities.Answer;
 import com.mkmcmxci.flow.listeners.PassToFragmentsListener;
 import com.mkmcmxci.flow.sharedpreferences.Services;
-import com.mkmcmxci.flow.tasks.AnsweredTask;
+import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
+import com.mkmcmxci.flow.tasks.PostDataTask;
 
-import java.util.ArrayList;
-import java.util.List;
+public class AnswerSendFragment extends Fragment {
 
-public class AnswerFragment extends Fragment {
+    View mView;
+    TextView mTitle, mTitleContent;
+    EditText mContent;
 
-    RecyclerView mRecView;
-    AnswerAdapter mAdapter;
-    List<Answer> mItemList;
     String questionID, questionTitle, questionContent, questionUsername, questionUserID, userQuestionSize, userAnswerSize;
     int questionAnswerSize;
-    View mView;
-    AnsweredTask answeredTask;
+
     //static int userID;
     //static String username, password, mail;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_answer, container, false);
+        mView = inflater.inflate(R.layout.fragment_answer_send, container, false);
         getArgs();
         getViews();
-        init();
         setHasOptionsMenu(true);
-        closeKeyboard();
+        mTitle.setText(questionTitle);
+        mTitleContent.setText(questionContent);
+        getKeyboard();
+
+
 
         return mView;
-
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        inflater.inflate(R.menu.answer_add_menu, menu);
+        inflater.inflate(R.menu.question_add_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == R.id.answer_add_menu_item) {
+        if (item.getItemId() == R.id.question_add_menu_item) {
+
+            PostDataTask answeredSendTask = new PostDataTask();
+            answeredSendTask.execute(Services.addAnswer(mContent.getText().toString(),Integer.parseInt(questionID), SessionManagement.loadUserID()));
+
             Bundle bundle = new Bundle();
             bundle.putString("QuestionID", questionID);
             bundle.putString("QuestionTitle", questionTitle);
             bundle.putString("QuestionContent", questionContent);
             bundle.putString("Username", questionUsername);
-            bundle.putInt("AnswerSize", questionAnswerSize);
+            bundle.putInt("AnswerSize", questionAnswerSize + 1);
             bundle.putString("UserID", questionUserID);
             bundle.putString("UserQuestionSize", userQuestionSize);
             bundle.putString("UserAnswerSize", userAnswerSize);
 
-            Navigation.findNavController(mView).navigate(R.id.action_navigation_answer_to_navigation_send_answers, bundle);
+            Navigation.findNavController(mView).navigate(R.id.action_navigation_send_answers_to_navigation_answer, bundle);
 
         } else {
 
@@ -85,23 +88,13 @@ public class AnswerFragment extends Fragment {
 
     }
 
-/*
-    @Override
-    public void onPassToFragments(int userID, String name, String mail, String password) {
-        this.userID = userID;
-        this.username = name;
-        this.password = password;
-        this.mail = mail;
+    public void getViews() {
+        mTitle = mView.findViewById(R.id.fragment_answer_send_title);
+        mContent = mView.findViewById(R.id.fragment_answer_send_reply);
+        mTitleContent = mView.findViewById(R.id.fragment_answer_send_title_content);
     }
 
-
- */
-
-    private void getViews() {
-        mRecView = mView.findViewById(R.id.fragment_answer_recycler_view);
-    }
-
-    private void getArgs() {
+    public void getArgs() {
         questionID = getArguments().getString("QuestionID");
         questionTitle = getArguments().getString("QuestionTitle");
         questionContent = getArguments().getString("QuestionContent");
@@ -112,22 +105,23 @@ public class AnswerFragment extends Fragment {
         userAnswerSize = getArguments().getString("UserAnswerSize");
     }
 
-    private void init() {
-        mItemList = new ArrayList<>();
-        mItemList.add(new Answer(questionUsername, questionContent, questionTitle, questionAnswerSize, Integer.parseInt(questionUserID), Integer.parseInt(userQuestionSize), Integer.parseInt(userAnswerSize), Integer.parseInt(questionID), Integer.parseInt(questionUserID), 0, questionContent, null));
-        mAdapter = new AnswerAdapter(getContext(), mItemList, Integer.parseInt(questionUserID),questionUsername, questionTitle);
-        mRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecView.setAdapter(mAdapter);
-        answeredTask = new AnsweredTask(mAdapter, mItemList);
-        answeredTask.execute(Services.answerByQuestion(Integer.parseInt(questionID)));
+    /*
+    @Override
+    public void onPassToFragments(int userID, String name, String mail, String password) {
+        this.userID = userID;
+        this.username = name;
+        this.password = password;
+        this.mail = mail;
     }
 
 
-    private void closeKeyboard() {
-        View view = getActivity().getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+     */
+
+    private void getKeyboard(){
+
+        mContent.requestFocus();
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+
     }
 }

@@ -2,46 +2,40 @@ package com.mkmcmxci.flow.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mkmcmxci.flow.R;
-import com.mkmcmxci.flow.entities.Answer;
 import com.mkmcmxci.flow.entities.Message;
-import com.mkmcmxci.flow.interfaces.PassToActs;
-import com.mkmcmxci.flow.tasks.AnsweredSendTask;
+import com.mkmcmxci.flow.listeners.PassToActivitiesListener;
+import com.mkmcmxci.flow.sharedpreferences.Services;
+import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
+import com.mkmcmxci.flow.tasks.PostDataTask;
 import com.mkmcmxci.flow.tasks.SendMessageTask;
-import com.mkmcmxci.flow.tasks.ShowProfileAnswerTask;
 
 import java.util.ArrayList;
 
-public class SendMessageActivity extends AppCompatActivity implements PassToActs {
+public class SendMessageActivity extends AppCompatActivity {
 
     EditText mMessageContent;
     ImageView mSendButton;
-    String URL = "http://10.0.2.2:8080/BulletinBoard/rest/messagewebservices/getmessages";
-    String URL2 = "http://10.0.2.2:8080/BulletinBoard/rest/messagewebservices/addconversation";
     RecyclerView mMessageRecView;
     SendMessageAdapter mMessageAdapter;
     ArrayList<Message> mMessageList;
     SendMessageTask mMessageTask;
     String username;
     int receiverID;
-    static int userID;
+    //static int userID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +46,7 @@ public class SendMessageActivity extends AppCompatActivity implements PassToActs
         receiverID = getIntent().getExtras().getInt("UserID");
 
         getViews();
-
         init();
-
 
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,8 +55,8 @@ public class SendMessageActivity extends AppCompatActivity implements PassToActs
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AnsweredSendTask a = new AnsweredSendTask();
-                a.execute(URL2 + "/" + userID + "/" + receiverID + "/" + mMessageContent.getText().toString());
+                PostDataTask task = new PostDataTask();
+                task.execute(Services.addConversation(SessionManagement.loadUserID(), receiverID, mMessageContent.getText().toString()));
 
                 init();
                 mMessageContent.setText("");
@@ -78,13 +70,14 @@ public class SendMessageActivity extends AppCompatActivity implements PassToActs
     private void init() {
 
         mMessageList = new ArrayList<>();
-        mMessageAdapter = new SendMessageAdapter(this, mMessageList, userID);
-        LinearLayoutManager lManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        mMessageAdapter = new SendMessageAdapter(this, mMessageList, SessionManagement.loadUserID());
+        LinearLayoutManager lManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         lManager.setStackFromEnd(true);
         mMessageRecView.setLayoutManager(lManager);
         mMessageRecView.setAdapter(mMessageAdapter);
         mMessageTask = new SendMessageTask(this, mMessageList, mMessageAdapter);
-        mMessageTask.execute(URL + "/" + userID + "/" + String.valueOf(receiverID));
+        mMessageTask.execute(Services.getMessages(SessionManagement.loadUserID(), receiverID));
+
 
     }
 
@@ -106,10 +99,13 @@ public class SendMessageActivity extends AppCompatActivity implements PassToActs
         return super.onOptionsItemSelected(item);
     }
 
+    /*
     @Override
-    public void onPassToAct(int userID, String name, String mail, String password) {
+    public void onPassToActivities(int userID, String name, String mail, String password) {
         this.userID = userID;
     }
+
+     */
 
     private void closeKeyboard() {
         View view = getCurrentFocus();

@@ -2,6 +2,7 @@ package com.mkmcmxci.flow.ui.myaccount;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,19 +20,18 @@ import androidx.navigation.Navigation;
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.activity.ChangePasswordActivity;
 import com.mkmcmxci.flow.activity.LoginActivity;
-import com.mkmcmxci.flow.interfaces.PassToFrags;
+import com.mkmcmxci.flow.listeners.PassToFragmentsListener;
+import com.mkmcmxci.flow.sharedpreferences.Services;
 import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
-import com.mkmcmxci.flow.tasks.QuestionSendTask;
+import com.mkmcmxci.flow.tasks.PostDataTask;
 
-public class MyAccountSettingsFragment extends Fragment implements PassToFrags {
+public class MyAccountSettingsFragment extends Fragment {
 
     EditText mUsername, mEmail;
     TextView mChangePassword, mLogOut;
     View mView;
-    static int userID;
-    static String name, mail, password;
-    final String URL = "http://10.0.2.2:8080/BulletinBoard/rest/userwebservices/updateuser/";
-
+    //static int userID;
+    //static String name, mail, password;
 
     @Nullable
     @Override
@@ -39,15 +39,15 @@ public class MyAccountSettingsFragment extends Fragment implements PassToFrags {
         mView = inflater.inflate(R.layout.fragment_profile_settings, container, false);
         getViews();
 
-        mUsername.setText(name);
-        mEmail.setText(mail);
+        mUsername.setText(SessionManagement.loadUsername());
+        mEmail.setText(SessionManagement.loadMail());
 
         mChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(getContext(), ChangePasswordActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(getContext(), ChangePasswordActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -56,12 +56,12 @@ public class MyAccountSettingsFragment extends Fragment implements PassToFrags {
             @Override
             public void onClick(View v) {
 
-                SessionManagement sm = new SessionManagement(getContext());
-                sm.removeSession();
+                SessionManagement session = new SessionManagement(getContext());
+                session.removeSession();
 
-                Intent i = new Intent(getContext(), LoginActivity.class);
+                Intent intent = new Intent(getContext(), LoginActivity.class);
 
-                startActivity(i);
+                startActivity(intent);
             }
         });
 
@@ -78,8 +78,9 @@ public class MyAccountSettingsFragment extends Fragment implements PassToFrags {
         mLogOut = mView.findViewById(R.id.fragment_my_profile_settings_logout_textview);
     }
 
+    /*
     @Override
-    public void onPassToFrags(int userID, String name, String mail, String password) {
+    public void onPassToFragments(int userID, String name, String mail, String password) {
         this.userID = userID;
         this.name = name;
         this.mail = mail;
@@ -87,6 +88,8 @@ public class MyAccountSettingsFragment extends Fragment implements PassToFrags {
 
     }
 
+
+     */
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -98,8 +101,10 @@ public class MyAccountSettingsFragment extends Fragment implements PassToFrags {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.answer_save_menu_item) {
-            QuestionSendTask task = new QuestionSendTask();
-            task.execute(URL + userID + "/" + mEmail.getText().toString() + "/" + mUsername.getText().toString());
+            PostDataTask task = new PostDataTask();
+            task.execute(Services.updateUser(SessionManagement.loadUserID(), mEmail.getText().toString(), mUsername.getText().toString()));
+            SessionManagement.saveMail(mEmail.getText().toString());
+            SessionManagement.saveUsername(mUsername.getText().toString());
 
             Navigation.findNavController(mView).navigate(R.id.action_navigation_my_account_settings_to_navigation_my_account);
 

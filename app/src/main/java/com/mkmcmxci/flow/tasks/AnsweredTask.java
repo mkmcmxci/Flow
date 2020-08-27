@@ -99,8 +99,6 @@ public class AnsweredTask extends AsyncTask<String, Void, String> {
             e.printStackTrace();
         }
 
-        Log.i("Dev",answeredItemList.toString());
-
     }
 
 }

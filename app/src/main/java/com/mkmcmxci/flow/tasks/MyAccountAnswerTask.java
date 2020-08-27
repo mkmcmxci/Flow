@@ -97,8 +97,6 @@ public class MyAccountAnswerTask extends AsyncTask<String, Void, String> {
                         obj.getString("QuestionUsername")));
             }
 
-            Log.i("Dev", "Kaan");
-
             myAccountAnswerAdapter.notifyDataSetChanged();
 
         } catch (JSONException e) {

@@ -7,14 +7,14 @@ import com.mkmcmxci.flow.entities.User;
 
 public class SessionManagement {
 
-    Context context;
+    private static Context context;
 
     public SessionManagement(Context context) {
         this.context = context;
 
     }
 
-    public void saveSession(User user) {
+    public static void saveSession(User user) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("Token", user.getId());
@@ -26,14 +26,41 @@ public class SessionManagement {
 
     }
 
-    public int loadSession() {
+    public static void savePassword(String password){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Password", password);
+        editor.commit();
+
+
+    }
+
+    public static void saveUsername(String username){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Username", username);
+        editor.commit();
+
+
+    }
+
+    public static void saveMail(String mail){
+        SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("Mail", mail);
+        editor.commit();
+
+
+    }
+
+    public static int loadSession() {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
 
         return sharedPreferences.getInt("Token", -1);
     }
 
-    public int loadUserID() {
+    public static int loadUserID() {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
 
@@ -41,7 +68,7 @@ public class SessionManagement {
         return sharedPreferences.getInt("UserID", 0);
     }
 
-    public String loadUsername() {
+    public static String loadUsername() {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
 
@@ -49,7 +76,7 @@ public class SessionManagement {
         return sharedPreferences.getString("Username", "notFound");
     }
 
-    public String loadMail() {
+    public static String loadMail() {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
 
@@ -57,7 +84,7 @@ public class SessionManagement {
         return sharedPreferences.getString("Mail", "notFound");
     }
 
-    public String loadPassword() {
+    public static String loadPassword() {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
 
@@ -65,7 +92,7 @@ public class SessionManagement {
         return sharedPreferences.getString("Password", "notFound");
     }
 
-    public int removeSession() {
+    public static int removeSession() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();

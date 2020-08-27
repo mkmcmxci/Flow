@@ -37,14 +37,13 @@ public class MyAccountAnswerAdapter extends RecyclerView.Adapter<MyAccountAnswer
     @Override
     public void onBindViewHolder(@NonNull MyAccountAnswerViewHolder holder, final int position) {
 
-        holder.questionTitle.setText(mList.get(position).getTitle());
-        holder.answerContent.setText(mList.get(position).getContent());
+        holder.title.setText(mList.get(position).getTitle());
+        holder.content.setText(mList.get(position).getContent());
 
-        holder.questionTitle.setOnClickListener(new View.OnClickListener() {
+        holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                /* bundle to AnswerFragment */
 
                 Bundle bundle = new Bundle();
                 bundle.putString("QuestionID", String.valueOf(mList.get(position).getQuestionID()));
@@ -58,7 +57,6 @@ public class MyAccountAnswerAdapter extends RecyclerView.Adapter<MyAccountAnswer
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_my_account_to_navigation_answer, bundle);
 
-                /*  bundle to AnswerFragment */
 
 
             }
@@ -73,14 +71,14 @@ public class MyAccountAnswerAdapter extends RecyclerView.Adapter<MyAccountAnswer
 
     public class MyAccountAnswerViewHolder extends RecyclerView.ViewHolder {
 
-        TextView questionTitle;
-        TextView answerContent;
+        TextView title;
+        TextView content;
 
         public MyAccountAnswerViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            questionTitle = itemView.findViewById(R.id.fragment_my_account_row_title_textview);
-            answerContent = itemView.findViewById(R.id.fragment_my_account_row_answer_textview);
+            title = itemView.findViewById(R.id.fragment_my_account_row_title_textview);
+            content = itemView.findViewById(R.id.fragment_my_account_row_answer_textview);
 
         }
     }

@@ -14,8 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.mkmcmxci.flow.R;
+import com.mkmcmxci.flow.sharedpreferences.Services;
+import com.mkmcmxci.flow.tasks.PostDataTask;
 
 public class ShowProfileEditQuestionFragment extends Fragment {
 
@@ -24,6 +25,7 @@ public class ShowProfileEditQuestionFragment extends Fragment {
 
     String questionID, questionTitle, questionContent, questionUsername, questionUserID, userQuestionSize, userAnswerSize;
     int questionAnswerSize;
+
 
 
     @Nullable
@@ -35,9 +37,6 @@ public class ShowProfileEditQuestionFragment extends Fragment {
 
         mTitle.setText(questionTitle);
         mContent.setText(questionContent);
-
-
-
 
         setHasOptionsMenu(true);
 
@@ -57,17 +56,21 @@ public class ShowProfileEditQuestionFragment extends Fragment {
 
         if (item.getItemId() == R.id.question_add_menu_item) {
 
+            PostDataTask task = new PostDataTask();
+            task.execute(Services.editQuestion(Integer.parseInt(questionID), mTitle.getText().toString(), mContent.getText().toString()));
+
+
             Bundle bundle = new Bundle();
             bundle.putString("QuestionID", questionID);
             bundle.putString("QuestionTitle", mTitle.getText().toString());
             bundle.putString("QuestionContent", mContent.getText().toString());
             bundle.putString("Username", questionUsername);
-            bundle.putInt("AnswerSize",questionAnswerSize);
+            bundle.putInt("AnswerSize", questionAnswerSize + 1);
             bundle.putString("UserID", questionUserID);
             bundle.putString("UserQuestionSize", userQuestionSize);
             bundle.putString("UserAnswerSize", userAnswerSize);
 
-            Navigation.findNavController(mView).navigate(R.id.action_navigation_edit_question_to_navigation_answer,bundle);
+            Navigation.findNavController(mView).navigate(R.id.action_navigation_edit_question_to_navigation_answer, bundle);
 
 
         } else {
@@ -80,7 +83,7 @@ public class ShowProfileEditQuestionFragment extends Fragment {
 
     }
 
-    public void getViews(){
+    public void getViews() {
 
         mTitle = mView.findViewById(R.id.fragment_edit_question_spinner_title_edittext);
         mContent = mView.findViewById(R.id.fragment_edit_question_spinner_content_edittext);

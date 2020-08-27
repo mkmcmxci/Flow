@@ -18,33 +18,33 @@ import java.util.List;
 
 public class ShowProfileQuestionFragmentAdapter extends RecyclerView.Adapter<ShowProfileQuestionFragmentAdapter.ShowProfileQuestionViewHolder> {
 
-    Context showProfileQuestionContext;
-    List<Question> showProfileQuestionQuestionList;
+    Context mContext;
+    List<Question> mQuestionList;
 
-    public ShowProfileQuestionFragmentAdapter(Context showProfileQuestionContext, List<Question> showProfileQuestionQuestionList) {
-        this.showProfileQuestionContext = showProfileQuestionContext;
-        this.showProfileQuestionQuestionList = showProfileQuestionQuestionList;
+    public ShowProfileQuestionFragmentAdapter(Context context, List<Question> list) {
+        this.mContext = context;
+        this.mQuestionList = list;
 
     }
 
     @NonNull
     @Override
     public ShowProfileQuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(showProfileQuestionContext).inflate(R.layout.fragment_entry_row, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_entry_row, parent, false);
 
         return new ShowProfileQuestionFragmentAdapter.ShowProfileQuestionViewHolder(view);     }
 
     @Override
     public void onBindViewHolder(@NonNull ShowProfileQuestionViewHolder holder, final int position) {
-        holder.questionTitle.setText(showProfileQuestionQuestionList.get(position).getTitle());
+        holder.questionTitle.setText(mQuestionList.get(position).getTitle());
 
-        if (showProfileQuestionQuestionList.get(position).getAnswerSize() == 0) {
+        if (mQuestionList.get(position).getAnswerSize() == 0) {
 
             holder.answerCount.setText("");
 
         } else {
 
-            holder.answerCount.setText(String.valueOf(showProfileQuestionQuestionList.get(position).getAnswerSize()));
+            holder.answerCount.setText(String.valueOf(mQuestionList.get(position).getAnswerSize()));
 
         }
 
@@ -55,14 +55,14 @@ public class ShowProfileQuestionFragmentAdapter extends RecyclerView.Adapter<Sho
 
 
                 Bundle bundle = new Bundle();
-                bundle.putString("QuestionID", String.valueOf(showProfileQuestionQuestionList.get(position).getId()));
-                bundle.putString("QuestionTitle", showProfileQuestionQuestionList.get(position).getTitle());
-                bundle.putString("QuestionContent", showProfileQuestionQuestionList.get(position).getContent());
-                bundle.putString("Username", showProfileQuestionQuestionList.get(position).getUsername());
-                bundle.putInt("AnswerSize", showProfileQuestionQuestionList.get(position).getAnswerSize());
-                bundle.putString("UserID", String.valueOf(showProfileQuestionQuestionList.get(position).getQuestionUserID()));
-                bundle.putString("UserQuestionSize", String.valueOf(showProfileQuestionQuestionList.get(position).getUserQuestionSize()));
-                bundle.putString("UserAnswerSize", String.valueOf(showProfileQuestionQuestionList.get(position).getAnswerSize()));
+                bundle.putString("QuestionID", String.valueOf(mQuestionList.get(position).getId()));
+                bundle.putString("QuestionTitle", mQuestionList.get(position).getTitle());
+                bundle.putString("QuestionContent", mQuestionList.get(position).getContent());
+                bundle.putString("Username", mQuestionList.get(position).getUsername());
+                bundle.putInt("AnswerSize", mQuestionList.get(position).getAnswerSize());
+                bundle.putString("UserID", String.valueOf(mQuestionList.get(position).getQuestionUserID()));
+                bundle.putString("UserQuestionSize", String.valueOf(mQuestionList.get(position).getUserQuestionSize()));
+                bundle.putString("UserAnswerSize", String.valueOf(mQuestionList.get(position).getAnswerSize()));
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_show_profile_to_navigation_answer, bundle);
 
@@ -73,7 +73,7 @@ public class ShowProfileQuestionFragmentAdapter extends RecyclerView.Adapter<Sho
 
     @Override
     public int getItemCount() {
-        return showProfileQuestionQuestionList.size();
+        return mQuestionList.size();
     }
 
     public class ShowProfileQuestionViewHolder extends RecyclerView.ViewHolder {

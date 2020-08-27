@@ -37,23 +37,21 @@ public class MyAccountQuestionAdapter extends RecyclerView.Adapter<MyAccountQues
     @Override
     public void onBindViewHolder(@NonNull MyAccountQuestionViewHolder holder, final int position) {
 
-        holder.questionTitle.setText(mList.get(position).getTitle());
+        holder.title.setText(mList.get(position).getTitle());
 
         if (mList.get(position).getAnswerSize() == 0) {
 
-            holder.answerCount.setText("");
+            holder.count.setText("");
 
         } else {
 
-            holder.answerCount.setText(String.valueOf(mList.get(position).getAnswerSize()));
+            holder.count.setText(String.valueOf(mList.get(position).getAnswerSize()));
 
         }
 
-        holder.questionTitle.setOnClickListener(new View.OnClickListener() {
+        holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                /* bundle to AnswerFragment */
 
                 Bundle bundle = new Bundle();
                 bundle.putString("QuestionID", String.valueOf(mList.get(position).getId()));
@@ -68,8 +66,6 @@ public class MyAccountQuestionAdapter extends RecyclerView.Adapter<MyAccountQues
                 Navigation.findNavController(v).navigate(R.id.action_navigation_my_account_to_navigation_answer, bundle);
 
 
-                /* bundle to AnswerFragment */
-
             }
         });
 
@@ -82,14 +78,14 @@ public class MyAccountQuestionAdapter extends RecyclerView.Adapter<MyAccountQues
 
     public class MyAccountQuestionViewHolder extends RecyclerView.ViewHolder {
 
-        TextView questionTitle;
-        TextView answerCount;
+        TextView title;
+        TextView count;
 
         public MyAccountQuestionViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            questionTitle = itemView.findViewById(R.id.fragment_entry_row_title_textview);
-            answerCount = itemView.findViewById(R.id.fragment_entry_row_answer_textview);
+            title = itemView.findViewById(R.id.fragment_entry_row_title_textview);
+            count = itemView.findViewById(R.id.fragment_entry_row_answer_textview);
 
         }
     }

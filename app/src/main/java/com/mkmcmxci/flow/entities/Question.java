@@ -100,8 +100,5 @@ public class Question {
         this.userAnswerSize = userAnswerSize;
     }
 
-    @Override
-    public String toString() {
-        return title;
-    }
+
 }

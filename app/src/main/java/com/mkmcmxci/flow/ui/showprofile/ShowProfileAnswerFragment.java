@@ -14,12 +14,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.entities.Answer;
-import com.mkmcmxci.flow.interfaces.PassToFrags;
+import com.mkmcmxci.flow.listeners.PassToFragmentsListener;
+import com.mkmcmxci.flow.sharedpreferences.Services;
+import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
 import com.mkmcmxci.flow.tasks.ShowProfileAnswerTask;
 
 import java.util.ArrayList;
 
-public class ShowProfileAnswerFragment extends Fragment implements PassToFrags {
+public class ShowProfileAnswerFragment extends Fragment {
 
     RecyclerView mAnswerRecView;
     ShowProfileAnswerFragmentAdapter mAnswerAdapter;
@@ -27,14 +29,15 @@ public class ShowProfileAnswerFragment extends Fragment implements PassToFrags {
     ShowProfileAnswerTask mAnswerTask;
     SwipeRefreshLayout mSwipeRefresh;
     View mAnswerView;
-    static int userID;
-    private static final String mURL = "http://10.0.2.2:8080/BulletinBoard/rest/answerwebservices/answerbyuser/";
+    int userID;
+    SessionManagement session;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAnswerView = inflater.inflate(R.layout.fragment_my_account_answer, container, false);
         getViews();
+        getSession();
         init();
 
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -50,11 +53,14 @@ public class ShowProfileAnswerFragment extends Fragment implements PassToFrags {
 
     }
 
+    /*
     @Override
-    public void onPassToFrags(int userID, String name, String mail, String password) {
+    public void onPassToFragments(int userID, String name, String mail, String password) {
         this.userID = userID;
 
     }
+
+     */
 
     public void getViews() {
 
@@ -70,7 +76,14 @@ public class ShowProfileAnswerFragment extends Fragment implements PassToFrags {
         mAnswerRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAnswerRecView.setAdapter(mAnswerAdapter);
         mAnswerTask = new ShowProfileAnswerTask(getContext(), mAnswerAdapter, mAnswerList);
-        mAnswerTask.execute(mURL + userID);
+        mAnswerTask.execute(Services.answerByUser(userID));
+
+    }
+
+    private void getSession() {
+        session = new SessionManagement(getContext());
+        userID = session.loadUserID();
+
 
     }
 }

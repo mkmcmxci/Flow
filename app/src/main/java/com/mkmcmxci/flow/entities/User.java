@@ -71,13 +71,4 @@ public class User {
         this.numberOfAnswers = numberOfAnswers;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", mail='" + mail + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

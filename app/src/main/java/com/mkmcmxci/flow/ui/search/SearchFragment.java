@@ -1,29 +1,24 @@
-package com.mkmcmxci.flow.ui.find;
+package com.mkmcmxci.flow.ui.search;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.mkmcmxci.flow.R;
-import com.mkmcmxci.flow.interfaces.PassToFrags;
+import com.mkmcmxci.flow.listeners.PassToFragmentsListener;
 
-public class FindFragment extends Fragment implements PassToFrags {
+public class SearchFragment extends Fragment {
 
     SearchView mSearchView;
     FindResultAdapter mAdapter;
     View mView;
-    static int userID;
-    static String username, password, mail;
+    //static int userID;
+    //static String username, password, mail;
 
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_find, container, false);
@@ -38,7 +33,7 @@ public class FindFragment extends Fragment implements PassToFrags {
         });
 
         getActivity().getSupportFragmentManager().beginTransaction().
-                replace(R.id.fragment_find_frame_view, new CategoryFragment()).commit();
+                replace(R.id.fragment_find_frame_view, new CategoryListFragment()).commit();
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -51,7 +46,7 @@ public class FindFragment extends Fragment implements PassToFrags {
 
                 if (newText.equals("")) {
                     getActivity().getSupportFragmentManager().beginTransaction().
-                            replace(R.id.fragment_find_frame_view, new CategoryFragment()).commit();
+                            replace(R.id.fragment_find_frame_view, new CategoryListFragment()).commit();
 
                 } else {
                     getActivity().getSupportFragmentManager().beginTransaction().
@@ -71,12 +66,15 @@ public class FindFragment extends Fragment implements PassToFrags {
 
     }
 
+    /*
     @Override
-    public void onPassToFrags(int userID, String name, String mail, String password) {
+    public void onPassToFragments(int userID, String name, String mail, String password) {
         this.userID = userID;
         this.username = name;
         this.mail = mail;
         this.password = password;
     }
+
+     */
 
 }

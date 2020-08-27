@@ -2,9 +2,9 @@ package com.mkmcmxci.flow.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.TextView;
 
-import com.mkmcmxci.flow.entities.Question;
-import com.mkmcmxci.flow.ui.flow.MainFlowAdapter;
+import com.mkmcmxci.flow.entities.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,26 +17,23 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainFlowTask extends AsyncTask<String, Void, String> {
+public class MyAccountTask extends AsyncTask<String, Void, String> {
 
-    MainFlowAdapter mainFlowAdapter;
-    List<Question> mainFlowQuestionList;
-    Context context;
-
-
-    public MainFlowTask(Context context, MainFlowAdapter mainFlowAdapter, List<Question> mainFlowQuestionList) {
-        this.mainFlowAdapter = mainFlowAdapter;
-        this.mainFlowQuestionList = mainFlowQuestionList;
-        this.context = context;
-    }
-
-    @Override
-    protected void onPreExecute() {
+    Context mContext;
+    ArrayList<User> mList;
+    TextView mQuestionCount, mAnswerCount, mUsername;
+    String name, mail;
 
 
-
+    public MyAccountTask(Context context, ArrayList<User> list, TextView questionCount, TextView answerCount, TextView username, String name, String mail) {
+        this.mList = list;
+        this.mContext = context;
+        this.name = name;
+        this.mail = mail;
+        this.mQuestionCount = questionCount;
+        this.mAnswerCount = answerCount;
+        this.mUsername = username;
     }
 
     @Override
@@ -80,36 +77,36 @@ public class MainFlowTask extends AsyncTask<String, Void, String> {
         try {
             JSONObject jObject = new JSONObject(s);
 
-            JSONArray jArray = jObject.getJSONArray("Questions");
+            JSONArray jArray = jObject.getJSONArray("Users");
 
             for (int i = 0; i < jArray.length(); i++) {
 
                 JSONObject obj = (JSONObject) jArray.get(i);
 
-                mainFlowQuestionList.add(new Question(obj.getInt("QuestionID"),
-                        obj.getString("QuestionTitle"),
-                        obj.getString("QuestionContent"),
+                mList.add(new User(obj.getInt("UserID"),
                         obj.getString("Username"),
-                        obj.getInt("AnswerSize"),
-                        obj.getInt("UserID"),
-                        obj.getInt("UserQuestionSize"),
-                        obj.getInt("UserAnswerSize")));
+                        obj.getString("Mail"),
+                        obj.getString("Password"), obj.getInt("UserAnswerSize"), obj.getInt("UserQuestionSize")));
             }
-
-
-            mainFlowAdapter.notifyDataSetChanged();
 
 
         } catch (JSONException e) {
 
             e.printStackTrace();
+
         }
 
+        name = String.valueOf(mList.get(0).getName());
 
+        mail = String.valueOf(mList.get(0).getMail());
 
+        mQuestionCount.setText(String.valueOf(mList.get(0).getNumberOfQuestions()));
+
+        mAnswerCount.setText(String.valueOf(mList.get(0).getNumberOfAnswers()));
+
+        mUsername.setText(name);
 
 
 
     }
-
 }

@@ -1,7 +1,6 @@
 package com.mkmcmxci.flow.ui.message;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,25 +14,23 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.entities.Conversation;
-import com.mkmcmxci.flow.entities.Message;
-import com.mkmcmxci.flow.interfaces.PassToFrags;
-import com.mkmcmxci.flow.tasks.MainFlowTask;
+import com.mkmcmxci.flow.listeners.PassToFragmentsListener;
+import com.mkmcmxci.flow.sharedpreferences.Services;
+import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
 import com.mkmcmxci.flow.tasks.MessageTask;
-import com.mkmcmxci.flow.ui.flow.MainFlowAdapter;
 
 import java.util.ArrayList;
 
-public class MessageFragment extends Fragment implements PassToFrags {
+public class MessageFragment extends Fragment {
 
     RecyclerView mRecyclerView;
     MessageAdapter mAdapter;
     ArrayList<Conversation> mMessageList;
     MessageTask mTask;
     SwipeRefreshLayout mSwipeRefresh;
-    static int userID;
-    static String username, password, mail;
+    //static int userID;
+    //static String username, password, mail;
     View mView;
-    final String URL = "http://10.0.2.2:8080/BulletinBoard/rest/messagewebservices/getconversation/";
 
     @Nullable
     @Override
@@ -70,14 +67,14 @@ public class MessageFragment extends Fragment implements PassToFrags {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
         mTask = new MessageTask(getContext(), mAdapter, mMessageList);
-        mTask.execute(URL + userID);
+        mTask.execute(Services.getConversation(SessionManagement.loadUserID()));
 
 
 
     }
-
+/*
     @Override
-    public void onPassToFrags(int userID, String name, String mail, String password) {
+    public void onPassToFragments(int userID, String name, String mail, String password) {
 
         this.userID = userID;
         this.username = name;
@@ -86,4 +83,6 @@ public class MessageFragment extends Fragment implements PassToFrags {
 
 
     }
+
+ */
 }

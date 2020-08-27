@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_find_result"
-    tools:context=".ui.find.FindResultFragment">
+    tools:context=".ui.search.FindResultFragment">
 
     <ListView
         android:id="@+id/fragment_find_result_list_view"

@@ -43,14 +43,6 @@ public class Message {
         this.username = username;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "date='" + date + '\'' +
-                ", reply='" + reply + '\'' +
-                ", username='" + username + '\'' +
-                '}';
-    }
 }
 
 

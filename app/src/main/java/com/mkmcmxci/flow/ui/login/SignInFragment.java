@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.activity.MainActivity;
+import com.mkmcmxci.flow.sharedpreferences.Services;
 import com.mkmcmxci.flow.tasks.UserSignInTask;
 
 public class SignInFragment extends Fragment {
@@ -25,7 +26,6 @@ public class SignInFragment extends Fragment {
     Button mLoginButton;
     EditText mEmail, mPassword;
     View mView;
-    final String URL = "http://10.0.2.2:8080/BulletinBoard/rest/userwebservices/getuserbymailandpassword/";
 
     @Nullable
     @Override
@@ -56,7 +56,8 @@ public class SignInFragment extends Fragment {
             public void onClick(View v) {
 
                 UserSignInTask ust = new UserSignInTask(getContext());
-                ust.execute(URL + mEmail.getText().toString() + "/" + mPassword.getText().toString());
+                ust.execute(Services.getUserByMailAndPassword(mEmail.getText().toString(),mPassword.getText().toString()));
+
 
             }
         });

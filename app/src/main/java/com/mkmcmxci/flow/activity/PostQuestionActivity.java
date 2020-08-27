@@ -1,12 +1,15 @@
 package com.mkmcmxci.flow.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -18,47 +21,43 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.entities.Category;
-import com.mkmcmxci.flow.interfaces.PassToActs;
-import com.mkmcmxci.flow.tasks.QuestionSendTask;
-import com.mkmcmxci.flow.ui.flow.MainFlowFragment;
+import com.mkmcmxci.flow.listeners.PassToActivitiesListener;
+import com.mkmcmxci.flow.sharedpreferences.Services;
+import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
+import com.mkmcmxci.flow.tasks.PostDataTask;
 
 import java.util.List;
 
-public class PostQuestionActivity extends AppCompatActivity implements PassToActs {
+public class PostQuestionActivity extends AppCompatActivity {
 
-    Spinner postQuestionSpinner;
-    EditText postQuestionTitleText;
-    EditText postQuestionContentText;
+    Spinner mSpinner, mItemSpinner;
+    EditText mTitle,mContent;
     List<Category> spinnerArray;
-    int spinInt;
-    static int userID;
-    static String username, password, mail;
+    Category mCategory;
+    int spinValue,userID;
+    SessionManagement session;
+    String username, password, mail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_question);
+        getViews();
+        session = new SessionManagement(this);
+        userID = session.loadUserID();
+        username = session.loadUsername();
+        mail = session.loadMail();
+        password = session.loadPassword();
 
-        postQuestionSpinner = findViewById(R.id.activity_post_question_spinner);
-        postQuestionTitleText = findViewById(R.id.activity_post_question_spinner_title_edittext);
-        postQuestionContentText = findViewById(R.id.activity_post_question_spinner_content_edittext);
+        fillSpinner();
+        showKeyboard();
 
-        Category c = new Category();
 
-        spinnerArray = c.getCategoryList();
-
-        final ArrayAdapter<Category> spinnerAdapter = new ArrayAdapter<>(
-                this, R.layout.spinner_main_row, spinnerArray);
-
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_row);
-        Spinner sItems = (Spinner) findViewById(R.id.activity_post_question_spinner);
-        sItems.setAdapter(spinnerAdapter);
-
-        postQuestionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                spinInt = spinnerArray.get(position).getId();
+                spinValue = spinnerArray.get(position).getId();
 
             }
 
@@ -69,9 +68,27 @@ public class PostQuestionActivity extends AppCompatActivity implements PassToAct
 
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+        mTitle.setFilters(new InputFilter[]{ new InputFilter.LengthFilter(140) });
 
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+    }
+
+    private void getViews() {
+        mSpinner = findViewById(R.id.activity_post_question_spinner);
+        mTitle = findViewById(R.id.activity_post_question_spinner_title_edittext);
+        mContent = findViewById(R.id.fragment_answer_send_reply);
+    }
+
+    private void fillSpinner() {
+        mCategory = new Category();
+        spinnerArray = mCategory.getCategoryList();
+        final ArrayAdapter<Category> spinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_main_row, spinnerArray);
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_row);
+        mItemSpinner = findViewById(R.id.activity_post_question_spinner);
+        mItemSpinner.setAdapter(spinnerAdapter);
     }
 
     @Override
@@ -90,43 +107,43 @@ public class PostQuestionActivity extends AppCompatActivity implements PassToAct
         switch (item.getItemId()) {
             case R.id.question_add_menu_item:
 
-                QuestionSendTask questionSendTask = new QuestionSendTask();
+                PostDataTask task = new PostDataTask();
+                task.execute(Services.addQuestion(mTitle.getText().toString(), mContent.getText().toString(), spinValue, userID));
 
-                questionSendTask.execute("http://10.0.2.2:8080/BulletinBoard/rest/questionwebservices/addquestion/" +
-                        postQuestionTitleText.getText().toString() + "/" +
-                        postQuestionContentText.getText().toString() + "/" +
-                        spinInt + "/" +
-                        userID);
-
-
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                i.putExtra("UserID",userID);
-                i.putExtra("Username",username);
-                i.putExtra("Password",password);
-                i.putExtra("Mail",mail);
-
-
-                startActivity(i);
-
-
-
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("UserID", userID);
+                intent.putExtra("Username", username);
+                intent.putExtra("Password", password);
+                intent.putExtra("Mail", mail);
+                startActivity(intent);
 
             default:
                 onBackPressed();
-                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 return super.onOptionsItemSelected(item);
 
         }
 
     }
 
+    private void showKeyboard() {
+        mTitle.requestFocus();
+        InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
     @Override
-    public void onPassToAct(int userID, String name, String mail, String password) {
-        this.userID = userID;
-        this.username = name;
-        this.password = password;
-        this.mail = mail;
+    public void onBackPressed() {
+        super.onBackPressed();
+        closeKeyboard();
 
+    }
 
+    private void closeKeyboard() {
+        View view = getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

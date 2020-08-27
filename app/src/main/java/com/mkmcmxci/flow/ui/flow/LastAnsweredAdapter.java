@@ -18,19 +18,19 @@ import java.util.List;
 
 public class LastAnsweredAdapter extends RecyclerView.Adapter<LastAnsweredAdapter.LastAnsweredViewHolder> {
 
-    Context lastAnsweredContext;
-    List<Question> lastAnsweredQuestionList;
+    Context mContext;
+    List<Question> mQuestionList;
 
-    public LastAnsweredAdapter(Context lastAnsweredContext, List<Question> lastAnsweredQuestionList) {
-        this.lastAnsweredContext = lastAnsweredContext;
-        this.lastAnsweredQuestionList = lastAnsweredQuestionList;
+    public LastAnsweredAdapter(Context context, List<Question> list) {
+        this.mContext = context;
+        this.mQuestionList = list;
     }
 
     @NonNull
     @Override
     public LastAnsweredViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(lastAnsweredContext).inflate(R.layout.fragment_entry_row_last_answered, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_entry_row_last_answered, parent, false);
 
         return new LastAnsweredAdapter.LastAnsweredViewHolder(view);
     }
@@ -38,29 +38,29 @@ public class LastAnsweredAdapter extends RecyclerView.Adapter<LastAnsweredAdapte
     @Override
     public void onBindViewHolder(@NonNull LastAnsweredViewHolder holder, final int position) {
 
-        holder.questionTitle.setText(lastAnsweredQuestionList.get(position).getTitle());
-        if (lastAnsweredQuestionList.get(position).getAnswerSize() == 0) {
+        holder.title.setText(mQuestionList.get(position).getTitle());
+        if (mQuestionList.get(position).getAnswerSize() == 0) {
 
             holder.answerCount.setText("");
 
         } else {
 
-            holder.answerCount.setText(String.valueOf(lastAnsweredQuestionList.get(position).getAnswerSize()));
+            holder.answerCount.setText(String.valueOf(mQuestionList.get(position).getAnswerSize()));
 
         }
 
-        holder.questionTitle.setOnClickListener(new View.OnClickListener() {
+        holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("QuestionID", String.valueOf(lastAnsweredQuestionList.get(position).getId()));
-                bundle.putString("QuestionTitle", lastAnsweredQuestionList.get(position).getTitle());
-                bundle.putString("QuestionContent", lastAnsweredQuestionList.get(position).getContent());
-                bundle.putString("Username", lastAnsweredQuestionList.get(position).getUsername());
-                bundle.putInt("AnswerSize", lastAnsweredQuestionList.get(position).getAnswerSize());
-                bundle.putString("UserID", String.valueOf(lastAnsweredQuestionList.get(position).getQuestionUserID()));
-                bundle.putString("UserQuestionSize", String.valueOf(lastAnsweredQuestionList.get(position).getUserQuestionSize()));
-                bundle.putString("UserAnswerSize", String.valueOf(lastAnsweredQuestionList.get(position).getAnswerSize()));
+                bundle.putString("QuestionID", String.valueOf(mQuestionList.get(position).getId()));
+                bundle.putString("QuestionTitle", mQuestionList.get(position).getTitle());
+                bundle.putString("QuestionContent", mQuestionList.get(position).getContent());
+                bundle.putString("Username", mQuestionList.get(position).getUsername());
+                bundle.putInt("AnswerSize", mQuestionList.get(position).getAnswerSize());
+                bundle.putString("UserID", String.valueOf(mQuestionList.get(position).getQuestionUserID()));
+                bundle.putString("UserQuestionSize", String.valueOf(mQuestionList.get(position).getUserQuestionSize()));
+                bundle.putString("UserAnswerSize", String.valueOf(mQuestionList.get(position).getAnswerSize()));
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_flow_to_navigation_answer2, bundle);
             }
@@ -69,18 +69,18 @@ public class LastAnsweredAdapter extends RecyclerView.Adapter<LastAnsweredAdapte
 
     @Override
     public int getItemCount() {
-        return lastAnsweredQuestionList.size();
+        return mQuestionList.size();
     }
 
     public class LastAnsweredViewHolder extends RecyclerView.ViewHolder {
 
-        TextView questionTitle;
+        TextView title;
         TextView answerCount;
 
         public LastAnsweredViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            questionTitle = itemView.findViewById(R.id.fragment_entry_row_last_answered_title_textview);
+            title = itemView.findViewById(R.id.fragment_entry_row_last_answered_title_textview);
             answerCount = itemView.findViewById(R.id.fragment_entry_row_last_answered_answer_textview);
 
         }

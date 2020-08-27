@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mkmcmxci.flow.R;
 import com.mkmcmxci.flow.entities.Message;
 import com.mkmcmxci.flow.sharedpreferences.SessionManagement;
-import com.mkmcmxci.flow.ui.flow.AnswerAdapter;
 
 import java.util.List;
 

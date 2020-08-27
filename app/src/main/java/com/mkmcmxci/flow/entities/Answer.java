@@ -135,13 +135,4 @@ public class Answer {
         this.userAnswerSize = userAnswerSize;
     }
 
-    @Override
-    public String toString() {
-        return "Answer{" +
-                "username='" + username + '\'' +
-                ", content='" + content + '\'' +
-                ", title='" + title + '\'' +
-                ", answerCount=" + answerCount +
-                '}';
-    }
 }

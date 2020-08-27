@@ -2,6 +2,7 @@ package com.mkmcmxci.flow.tasks;
 
 import android.os.AsyncTask;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class UserRegisterTask extends AsyncTask<String, Void, String> {
+public class PostDataTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPreExecute() {

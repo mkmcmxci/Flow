@@ -1,11 +1,9 @@
-package com.mkmcmxci.flow.ui.find;
+package com.mkmcmxci.flow.ui.search;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,12 +16,12 @@ import com.mkmcmxci.flow.entities.Category;
 
 import java.util.List;
 
-public class CategoryFragment extends Fragment {
+public class CategoryListFragment extends Fragment {
 
     RecyclerView mRecView;
     Category mCategory;
     List<Category> mCategoryList;
-    FindAdapter mAdapter;
+    SearchAdapter mAdapter;
     View mView;
 
     @Nullable
@@ -42,7 +40,7 @@ public class CategoryFragment extends Fragment {
     public void init(){
         mCategory = new Category();
         mCategoryList = mCategory.getCategoryList();
-        mAdapter = new FindAdapter(getContext(), mCategoryList);
+        mAdapter = new SearchAdapter(getContext(), mCategoryList);
         mRecView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecView.setAdapter(mAdapter);
     }

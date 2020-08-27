@@ -19,12 +19,12 @@ import java.util.List;
 
 public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFlowViewHolder> {
 
-    Context mainFlowContext;
-    List<Question> mainFlowQuestionList;
+    Context mContext;
+    List<Question> mQuestionList;
 
-    public MainFlowAdapter(Context mainFlowContext, List<Question> mainFlowQuestionList) {
-        this.mainFlowContext = mainFlowContext;
-        this.mainFlowQuestionList = mainFlowQuestionList;
+    public MainFlowAdapter(Context context, List<Question> list) {
+        this.mContext = context;
+        this.mQuestionList = list;
 
     }
 
@@ -32,7 +32,7 @@ public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFl
     @Override
     public MainFlowViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(mainFlowContext).inflate(R.layout.fragment_entry_row, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_entry_row, parent, false);
 
 
         return new MainFlowViewHolder(view);
@@ -43,30 +43,30 @@ public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFl
     @Override
     public void onBindViewHolder(@NonNull MainFlowViewHolder holder, final int position) {
 
-        holder.questionTitle.setText(mainFlowQuestionList.get(position).getTitle());
+        holder.title.setText(mQuestionList.get(position).getTitle());
 
-        if (mainFlowQuestionList.get(position).getAnswerSize() == 0) {
+        if (mQuestionList.get(position).getAnswerSize() == 0) {
 
             holder.answerCount.setText("");
 
         } else {
 
-            holder.answerCount.setText(String.valueOf(mainFlowQuestionList.get(position).getAnswerSize()));
+            holder.answerCount.setText(String.valueOf(mQuestionList.get(position).getAnswerSize()));
 
         }
 
-        holder.questionTitle.setOnClickListener(new View.OnClickListener() {
+        holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("QuestionID", String.valueOf(mainFlowQuestionList.get(position).getId()));
-                bundle.putString("QuestionTitle", mainFlowQuestionList.get(position).getTitle());
-                bundle.putString("QuestionContent", mainFlowQuestionList.get(position).getContent());
-                bundle.putString("Username", mainFlowQuestionList.get(position).getUsername());
-                bundle.putInt("AnswerSize", mainFlowQuestionList.get(position).getAnswerSize());
-                bundle.putString("UserID", String.valueOf(mainFlowQuestionList.get(position).getQuestionUserID()));
-                bundle.putString("UserQuestionSize", String.valueOf(mainFlowQuestionList.get(position).getUserQuestionSize()));
-                bundle.putString("UserAnswerSize", String.valueOf(mainFlowQuestionList.get(position).getUserAnswerSize()));
+                bundle.putString("QuestionID", String.valueOf(mQuestionList.get(position).getId()));
+                bundle.putString("QuestionTitle", mQuestionList.get(position).getTitle());
+                bundle.putString("QuestionContent", mQuestionList.get(position).getContent());
+                bundle.putString("Username", mQuestionList.get(position).getUsername());
+                bundle.putInt("AnswerSize", mQuestionList.get(position).getAnswerSize());
+                bundle.putString("UserID", String.valueOf(mQuestionList.get(position).getQuestionUserID()));
+                bundle.putString("UserQuestionSize", String.valueOf(mQuestionList.get(position).getUserQuestionSize()));
+                bundle.putString("UserAnswerSize", String.valueOf(mQuestionList.get(position).getUserAnswerSize()));
 
                 Navigation.findNavController(v).navigate(R.id.action_navigation_flow_to_navigation_answer2, bundle);
 
@@ -78,18 +78,18 @@ public class MainFlowAdapter extends RecyclerView.Adapter<MainFlowAdapter.MainFl
 
     @Override
     public int getItemCount() {
-        return mainFlowQuestionList.size();
+        return mQuestionList.size();
     }
 
     public class MainFlowViewHolder extends RecyclerView.ViewHolder {
 
-        TextView questionTitle;
+        TextView title;
         TextView answerCount;
 
         public MainFlowViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            questionTitle = itemView.findViewById(R.id.fragment_entry_row_title_textview);
+            title = itemView.findViewById(R.id.fragment_entry_row_title_textview);
             answerCount = itemView.findViewById(R.id.fragment_entry_row_answer_textview);
 
         }

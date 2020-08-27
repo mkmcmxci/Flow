@@ -1,4 +1,4 @@
-package com.mkmcmxci.flow.ui.find;
+package com.mkmcmxci.flow.ui.search;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,14 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
 
 import com.mkmcmxci.flow.R;
-import com.mkmcmxci.flow.activity.MainActivity;
 import com.mkmcmxci.flow.entities.Question;
 
 import java.util.ArrayList;
